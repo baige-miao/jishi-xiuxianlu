@@ -1,0 +1,74 @@
+<!--
+  八字流日运势页面
+  功能：根据用户出生八字，查看流日运势详情
+-->
+<view class="container {{themeClass}}">
+
+  <!-- 未填写出生信息提示 -->
+  <view class="empty-state" wx:if="{{!hasBazi}}">
+    <view class="empty-icon">🔮</view>
+    <view class="empty-title">尚未填写出生信息</view>
+    <view class="empty-desc">请先在设置中填写出生信息，才能查看八字流日运势</view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading-state" wx:elif="{{loading}}">
+    <text>正在推算运势...</text>
+  </view>
+
+  <!-- 运势内容 -->
+  <block wx:elif="{{fortune}}">
+
+    <!-- 今日运势标题 -->
+    <view class="today-title">今日运势</view>
+
+    <!-- 流日概要 -->
+    <view class="card fortune-header">
+      <view class="fortune-ganzhi">{{fortune.liuri.ganzhi}}日</view>
+      <view class="fortune-shishen">{{fortune.shishen}}</view>
+      <view class="fortune-strength text-dim">{{fortune.strength}}</view>
+      <view class="fortune-level {{fortune.luckClass}}">{{fortune.luck_level}}</view>
+    </view>
+
+    <!-- 五行分析 -->
+    <view class="card" wx:if="{{fortune.wuxingDetail}}">
+      <view class="card-title">五行分析</view>
+      <view class="card-body">{{fortune.wuxingDetail}}</view>
+    </view>
+
+    <!-- 各柱对照 -->
+    <view class="card" wx:if="{{fortune.pillars.length > 0}}">
+      <view class="card-title">各柱对照</view>
+      <view class="pillars-list">
+        <view class="pillar-item" wx:for="{{fortune.pillars}}" wx:key="name">
+          <view class="pillar-header">
+            <text class="pillar-label">{{item.name}}</text>
+            <text class="pillar-ganzhi">{{item.bazi}}</text>
+            <text class="pillar-shishen">{{item.relation}}</text>
+            <text class="pillar-xiji {{item.xiJi === '喜神' ? 'text-success' : 'text-danger'}}">{{item.xiJi}}</text>
+          </view>
+          <view class="pillar-desc" wx:if="{{item.detail}}">{{item.detail}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 宜忌 -->
+    <view class="card">
+      <view class="card-title">今日宜忌</view>
+      <view class="yiji-section">
+        <view class="yiji-row yi-row" wx:if="{{fortune.yi && fortune.yi.length > 0}}">
+          <text class="yiji-icon">宜</text>
+          <text class="yiji-text">{{fortune.yi}}</text>
+        </view>
+        <view class="yiji-row ji-row" wx:if="{{fortune.ji && fortune.ji.length > 0}}">
+          <text class="yiji-icon">忌</text>
+          <text class="yiji-text">{{fortune.ji}}</text>
+        </view>
+        <view class="yiji-empty" wx:if="{{(!fortune.yi || fortune.yi.length === 0) && (!fortune.ji || fortune.ji.length === 0)}}">
+          <text class="text-dim">暂无宜忌信息</text>
+        </view>
+      </view>
+    </view>
+
+  </block>
+</view>

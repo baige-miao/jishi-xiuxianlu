@@ -1,0 +1,183 @@
+/**
+ * 备忘录页面样式
+ */
+
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* 列表头部 */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 24rpx 12rpx;
+}
+
+.page-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.btn-add {
+  background: var(--accent);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 10rpx;
+  padding: 10rpx 24rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* 加载 */
+.loading {
+  text-align: center;
+  padding: 100rpx 0;
+  color: var(--dim);
+}
+
+/* 备忘录卡片 */
+.memo-list {
+  padding: 12rpx 24rpx 24rpx;
+}
+
+.memo-card-wrap {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 16rpx;
+  border-radius: 14rpx;
+}
+
+.memo-card {
+  background: var(--card-bg);
+  border: 1rpx solid var(--border);
+  border-radius: 14rpx;
+  padding: 20rpx 24rpx;
+  transition: transform 0.25s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.memo-card.swiped {
+  transform: translateX(-140rpx);
+}
+
+.memo-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.memo-preview {
+  font-size: 24rpx;
+  color: var(--dim);
+  margin-bottom: 8rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.memo-time {
+  font-size: 20rpx;
+  color: var(--dim);
+  text-align: right;
+}
+
+/* 滑动删除按钮 */
+.memo-delete-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 140rpx;
+  background: #ef5350;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  font-weight: 600;
+  border-radius: 0 14rpx 14rpx 0;
+  z-index: 0;
+}
+
+/* 空状态 */
+.empty-hint {
+  text-align: center;
+  color: var(--dim);
+  font-size: 26rpx;
+  padding: 120rpx 0;
+}
+
+/* ===== 编辑器 ===== */
+.editor {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--bg);
+}
+
+.editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 24rpx;
+  background: var(--card-bg);
+  border-bottom: 1rpx solid var(--border);
+}
+
+.btn-back {
+  background: transparent;
+  border: 1rpx solid var(--border);
+  color: var(--text);
+  padding: 8rpx 20rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  line-height: 1.5;
+}
+
+.btn-save {
+  background: var(--accent);
+  color: var(--btn-text);
+  border: none;
+  padding: 8rpx 24rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.editor-save-status {
+  font-size: 22rpx;
+  color: var(--dim);
+}
+
+.editor-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--text);
+  padding: 24rpx 24rpx 16rpx;
+  background: var(--bg);
+  border-bottom: 1rpx solid var(--border);
+}
+
+.editor-content {
+  flex: 1;
+  font-size: 28rpx;
+  color: var(--text);
+  padding: 24rpx;
+  background: var(--bg);
+  line-height: 1.8;
+  width: 100%;
+  box-sizing: border-box;
+}

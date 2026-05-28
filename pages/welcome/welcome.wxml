@@ -1,0 +1,50 @@
+<!--
+  欢迎页面
+  功能：首次打开小程序时显示，介绍应用核心功能
+  触发条件：用户未完成初始化且未跳过欢迎页
+-->
+<view class="welcome-container">
+  <!-- 右上角跳过按钮 -->
+  <view class="skip-btn" bindtap="onSkip">
+    <text>跳过</text>
+  </view>
+
+  <!-- 主内容区 -->
+  <view class="welcome-content">
+    <!-- 应用图标 -->
+    <view class="app-icon">
+      <text class="icon-text">⚔</text>
+    </view>
+
+    <!-- 标题 -->
+    <view class="title">
+      <text>记事修仙录</text>
+    </view>
+
+    <!-- 副标题 -->
+    <view class="subtitle">
+      <text>用游戏化的方式，记录你的成长</text>
+    </view>
+
+    <!-- 核心功能介绍 -->
+    <view class="features">
+      <view class="feature-item">
+        <view class="feature-dot"></view>
+        <text class="feature-text">设置个人属性和目标</text>
+      </view>
+      <view class="feature-item">
+        <view class="feature-dot"></view>
+        <text class="feature-text">完成每日任务获得成长</text>
+      </view>
+      <view class="feature-item">
+        <view class="feature-dot"></view>
+        <text class="feature-text">看见自己的进步轨迹</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="bottom-section">
+    <button class="start-btn" bindtap="onStart">开始使用</button>
+  </view>
+</view>

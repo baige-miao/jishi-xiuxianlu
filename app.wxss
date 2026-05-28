@@ -1,0 +1,289 @@
+/**
+ * 全局样式 - 主题系统
+ * 通过CSS变量实现4种主题切换
+ */
+
+/* ===== 默认主题（暗黑） ===== */
+page {
+  --bg: #0a0a14;
+  --card-bg: #141428;
+  --border: #252545;
+  --accent: #00d4aa;
+  --accent2: #7b68ee;
+  --gold: #f0c040;
+  --text: #e0e0e0;
+  --dim: #888888;
+  --danger: #ff4757;
+  --success: #2ed573;
+  --input-bg: #12121f;
+  --btn-text: #000;
+  --mask-bg: rgba(0, 0, 0, 0.6);
+  --accent-alpha-bg: rgba(0, 212, 170, 0.1);
+  --accent-alpha-border: rgba(0, 212, 170, 0.3);
+  --accent2-alpha-bg: rgba(169, 92, 232, 0.1);
+  --accent2-alpha-border: rgba(169, 92, 232, 0.3);
+  --spirit-color: #3742fa;
+  --spirit-alpha-bg: rgba(55, 66, 250, 0.1);
+  --spirit-alpha-border: rgba(55, 66, 250, 0.3);
+  --gold-alpha-bg: rgba(240, 192, 64, 0.05);
+  --gold-alpha-mid: rgba(240, 192, 64, 0.15);
+  --gold-alpha-border: rgba(240, 192, 64, 0.3);
+  --reminder-bg: rgba(255, 165, 2, 0.08);
+  --reminder-border: rgba(255, 165, 2, 0.25);
+  --book-bg: #0a0a18;
+  /* 数值颜色（属性值分段） */
+  --val-10: #ff4757;
+  --val-30: #ffa502;
+  --val-60: #1e90ff;
+  --val-100: #2ed573;
+  --val-200: #a55eea;
+  --val-500: #3742fa;
+  --val-max: #f0c040;
+  /* 任务类型颜色 */
+  --task-daily: #2ed573;
+  --task-special: #a55eea;
+  --task-emergency: #ff4757;
+  --task-phase: #3742fa;
+  /* 卡片设计变量 */
+  --card-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
+  --card-radius: 24rpx;
+  --card-padding: 32rpx;
+  --section-gap: 24rpx;
+
+  background-color: var(--bg);
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+/* ===== 暗黑主题（默认） ===== */
+.theme-dark {
+  color: var(--text);
+}
+
+/* ===== 修仙复古主题 ===== */
+.theme-ancient,
+.theme-ancient page {
+  color: var(--text);
+  --bg: #f5e6c8;
+  --card-bg: #e8d5a3;
+  --border: #c4a35a;
+  --accent: #8b4513;
+  --accent2: #d4a017;
+  --gold: #b8860b;
+  --text: #3e2723;
+  --dim: #8d6e63;
+  --danger: #c0392b;
+  --success: #27ae60;
+  --input-bg: #dcc89a;
+  --btn-text: #fff;
+  --mask-bg: rgba(0, 0, 0, 0.5);
+  --accent-alpha-bg: rgba(139, 69, 19, 0.1);
+  --accent-alpha-border: rgba(139, 69, 19, 0.3);
+  --accent2-alpha-bg: rgba(212, 160, 23, 0.1);
+  --accent2-alpha-border: rgba(212, 160, 23, 0.3);
+  --spirit-color: #6b3a0a;
+  --spirit-alpha-bg: rgba(107, 58, 10, 0.1);
+  --spirit-alpha-border: rgba(107, 58, 10, 0.3);
+  --gold-alpha-bg: rgba(184, 134, 11, 0.05);
+  --gold-alpha-mid: rgba(184, 134, 11, 0.15);
+  --gold-alpha-border: rgba(184, 134, 11, 0.3);
+  --reminder-bg: rgba(139, 69, 19, 0.08);
+  --reminder-border: rgba(139, 69, 19, 0.25);
+  --book-bg: #c4a35a;
+  --val-10: #c0392b;
+  --val-30: #b35900;
+  --val-60: #1a5276;
+  --val-100: #1e7a3a;
+  --val-200: #6b2d8b;
+  --val-500: #2c3e50;
+  --val-max: #8b6914;
+  --task-daily: #1e7a3a;
+  --task-special: #6b2d8b;
+  --task-emergency: #c0392b;
+  --task-phase: #2c3e50;
+  --card-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+/* ===== 轻量简约主题 ===== */
+.theme-light,
+.theme-light page {
+  color: var(--text);
+  --bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --border: #e0e0e0;
+  --accent: #4a90d9;
+  --accent2: #7c3aed;
+  --gold: #f59e0b;
+  --text: #1a1a2e;
+  --dim: #999999;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --input-bg: #f0f0f0;
+  --btn-text: #fff;
+  --mask-bg: rgba(0, 0, 0, 0.3);
+  --accent-alpha-bg: rgba(74, 144, 217, 0.1);
+  --accent-alpha-border: rgba(74, 144, 217, 0.3);
+  --accent2-alpha-bg: rgba(124, 58, 237, 0.1);
+  --accent2-alpha-border: rgba(124, 58, 237, 0.3);
+  --spirit-color: #4a90d9;
+  --spirit-alpha-bg: rgba(74, 144, 217, 0.1);
+  --spirit-alpha-border: rgba(74, 144, 217, 0.3);
+  --gold-alpha-bg: rgba(245, 158, 11, 0.05);
+  --gold-alpha-mid: rgba(245, 158, 11, 0.15);
+  --gold-alpha-border: rgba(245, 158, 11, 0.3);
+  --reminder-bg: rgba(245, 158, 11, 0.08);
+  --reminder-border: rgba(245, 158, 11, 0.25);
+  --book-bg: #e8e4de;
+  --val-10: #dc2626;
+  --val-30: #d97706;
+  --val-60: #2563eb;
+  --val-100: #16a34a;
+  --val-200: #7c3aed;
+  --val-500: #1d4ed8;
+  --val-max: #b45309;
+  --task-daily: #16a34a;
+  --task-special: #7c3aed;
+  --task-emergency: #dc2626;
+  --task-phase: #1d4ed8;
+  --card-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
+}
+
+/* ===== 赛博朋克主题 ===== */
+.theme-cyber,
+.theme-cyber page {
+  color: var(--text);
+  --bg: #0d0221;
+  --card-bg: #150050;
+  --border: #333366;
+  --accent: #ff00ff;
+  --accent2: #00ffff;
+  --gold: #ffff00;
+  --text: #e0e0ff;
+  --dim: #8888aa;
+  --danger: #ff0055;
+  --success: #00ff88;
+  --input-bg: #1a0044;
+  --btn-text: #000;
+  --mask-bg: rgba(0, 0, 0, 0.7);
+  --accent-alpha-bg: rgba(255, 0, 255, 0.1);
+  --accent-alpha-border: rgba(255, 0, 255, 0.3);
+  --accent2-alpha-bg: rgba(0, 255, 255, 0.1);
+  --accent2-alpha-border: rgba(0, 255, 255, 0.3);
+  --spirit-color: #00ffff;
+  --spirit-alpha-bg: rgba(0, 255, 255, 0.1);
+  --spirit-alpha-border: rgba(0, 255, 255, 0.3);
+  --gold-alpha-bg: rgba(255, 255, 0, 0.05);
+  --gold-alpha-mid: rgba(255, 255, 0, 0.15);
+  --gold-alpha-border: rgba(255, 255, 0, 0.3);
+  --reminder-bg: rgba(255, 255, 0, 0.08);
+  --reminder-border: rgba(255, 255, 0, 0.25);
+  --book-bg: #0a0020;
+  --val-10: #ff0055;
+  --val-30: #ff6600;
+  --val-60: #00ccff;
+  --val-100: #00ff88;
+  --val-200: #cc44ff;
+  --val-500: #4466ff;
+  --val-max: #ffff00;
+  --task-daily: #00ff88;
+  --task-special: #cc44ff;
+  --task-emergency: #ff0055;
+  --task-phase: #4466ff;
+  --card-shadow: 0 4rpx 20rpx rgba(255, 0, 255, 0.08);
+}
+
+/* ===== 通用样式 ===== */
+
+/* 通用卡片 */
+.card {
+  background: var(--card-bg);
+  border: 1rpx solid var(--border);
+  border-radius: 20rpx;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 通用按钮 */
+.btn-primary {
+  background: var(--accent);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 12rpx;
+  padding: 20rpx 40rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  text-align: center;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1rpx solid var(--accent);
+  color: var(--accent);
+  border-radius: 12rpx;
+  padding: 16rpx 32rpx;
+  font-size: 26rpx;
+  text-align: center;
+}
+
+.btn-danger {
+  background: transparent;
+  border: 1rpx solid var(--danger);
+  color: var(--danger);
+  border-radius: 12rpx;
+  padding: 12rpx 24rpx;
+  font-size: 24rpx;
+  text-align: center;
+}
+
+/* 区域标题 */
+.section-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  margin: 30rpx 0 16rpx;
+  color: var(--accent);
+}
+
+/* 分割线 */
+.divider {
+  height: 1rpx;
+  background: var(--border);
+  margin: 20rpx 0;
+}
+
+/* 隐藏 */
+.hidden {
+  display: none;
+}
+
+/* 数值颜色类（通过class而非style应用，兼容小程序） */
+.val-10 { color: var(--val-10); }
+.val-30 { color: var(--val-30); }
+.val-60 { color: var(--val-60); }
+.val-100 { color: var(--val-100); }
+.val-200 { color: var(--val-200); }
+.val-500 { color: var(--val-500); }
+.val-max { color: var(--val-max); }
+
+/* 任务类型颜色类 */
+.task-daily { color: var(--task-daily); }
+.task-special { color: var(--task-special); }
+.task-emergency { color: var(--task-emergency); }
+.task-phase { color: var(--task-phase); }
+
+/* 背景色类（用于进度条等） */
+.val-bg-10 { background-color: var(--val-10); }
+.val-bg-30 { background-color: var(--val-30); }
+.val-bg-60 { background-color: var(--val-60); }
+.val-bg-100 { background-color: var(--val-100); }
+.val-bg-200 { background-color: var(--val-200); }
+.val-bg-500 { background-color: var(--val-500); }
+.val-bg-max { background-color: var(--val-max); }
+
+/* 语义颜色类 */
+.text-gold { color: var(--gold); }
+.text-accent { color: var(--accent); }
+.text-accent2 { color: var(--accent2); }
+.text-dim { color: var(--dim); }
+.text-danger { color: var(--danger); }
+.text-success { color: var(--success); }

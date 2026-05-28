@@ -1,0 +1,35 @@
+<!--
+  日志页面
+-->
+<view class="container {{themeClass}}">
+  <view class="page-title">📜 活动日志</view>
+
+  <!-- 加载状态 -->
+  <view class="empty" wx:if="{{loading}}">
+    <view class="empty-icon">⏳</view>
+    <text>加载中...</text>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:if="{{!loading && logs.length === 0}}">
+    <view class="empty-icon">📭</view>
+    <text>暂无活动记录</text>
+    <text class="empty-sub">快去完成一些任务吧！</text>
+  </view>
+
+  <!-- 日志列表 -->
+  <block wx:if="{{!loading && logs.length > 0}}">
+    <view class="log-day" wx:for="{{groupedLogs}}" wx:key="date">
+      <view class="log-day-header">
+        📅 {{item.date}} {{item.isToday ? '（今天）' : ''}} · {{item.entries.length}} 条记录
+      </view>
+      <view class="log-entry" wx:for="{{item.entries}}" wx:for-item="entry" wx:key="index">
+        <view class="log-icon">✓</view>
+        <view class="log-body">
+          <view class="log-task-name">{{entry.task_name}}</view>
+          <view class="log-changes">→ {{entry.changesStr}}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

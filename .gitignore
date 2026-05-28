@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+miniprogram_npm/
+package-lock.json
+
+# WeChat DevTools
+project.private.config.json
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment / secrets
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# CodeGraph
+.codegraph/
+
+# Debug / test scripts
+test_*.py
+test_*.js
+crawl_*.py
+generate_*.py
+get-pip.py
+sync-levels.js

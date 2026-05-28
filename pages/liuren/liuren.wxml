@@ -1,0 +1,110 @@
+<!--
+  小六壬占卜页面
+  输入公历日期 → 自动转农历 → 起卦得三宫卦象
+-->
+<view class="page {{themeClass}}">
+  <view class="page-title">🔮 小六壬占卜</view>
+
+  <!-- 选择区 -->
+  <view class="picker-section">
+    <view class="picker-row">
+      <view class="picker-item">
+        <text class="picker-label">年份</text>
+        <picker mode="selector" range="{{years}}" value="{{selectedYear}}" bindchange="onYearChange">
+          <view class="picker-value">{{years[selectedYear]}} 年</view>
+        </picker>
+      </view>
+      <view class="picker-item">
+        <text class="picker-label">月份</text>
+        <picker mode="selector" range="{{months}}" value="{{selectedMonth}}" bindchange="onMonthChange">
+          <view class="picker-value">{{months[selectedMonth]}} 月</view>
+        </picker>
+      </view>
+      <view class="picker-item">
+        <text class="picker-label">日期</text>
+        <picker mode="selector" range="{{days}}" value="{{selectedDay}}" bindchange="onDayChange">
+          <view class="picker-value">{{days[selectedDay]}} 日</view>
+        </picker>
+      </view>
+    </view>
+    <view class="picker-row">
+      <view class="picker-item" style="flex: 3;">
+        <text class="picker-label">时辰</text>
+        <picker mode="selector" range="{{hourOptions}}" value="{{selectedHour}}" bindchange="onHourChange">
+          <view class="picker-value">{{hourOptions[selectedHour]}}</view>
+        </picker>
+      </view>
+    </view>
+    <!-- 农历信息 -->
+    <view class="lunar-info" wx:if="{{lunarInfo}}">
+      <text class="lunar-text">农历：{{lunarInfo.ganZhi}}（{{lunarInfo.animal}}年）{{lunarInfo.monthName}}{{lunarInfo.dayName}}</text>
+    </view>
+    <button class="btn-divine" bindtap="doDivination">起 卦</button>
+  </view>
+
+  <!-- 结果区 -->
+  <block wx:if="{{result}}">
+
+    <!-- 三宫结果 -->
+    <view class="section">
+      <view class="section-title">📋 三宫卦象</view>
+      <view class="god-cards">
+        <!-- 月宫 -->
+        <view class="god-card card-month">
+          <view class="god-card-header">
+            <text class="god-card-tag">月宫</text>
+            <text class="god-card-name">{{result.monthGod.name}}</text>
+          </view>
+          <text class="god-card-info">五行：{{result.monthGod.wuxing}} | 方位：{{result.monthGod.direction}}</text>
+          <text class="god-card-poem">{{result.monthGod.poem}}</text>
+          <text class="god-card-meaning">{{result.monthGod.meaning}}</text>
+        </view>
+        <!-- 日宫 -->
+        <view class="god-card card-day">
+          <view class="god-card-header">
+            <text class="god-card-tag">日宫</text>
+            <text class="god-card-name">{{result.dayGod.name}}</text>
+          </view>
+          <text class="god-card-info">五行：{{result.dayGod.wuxing}} | 方位：{{result.dayGod.direction}}</text>
+          <text class="god-card-poem">{{result.dayGod.poem}}</text>
+          <text class="god-card-meaning">{{result.dayGod.meaning}}</text>
+        </view>
+        <!-- 时宫 -->
+        <view class="god-card card-time">
+          <view class="god-card-header">
+            <text class="god-card-tag">时宫</text>
+            <text class="god-card-name">{{result.timeGod.name}}</text>
+          </view>
+          <text class="god-card-info">五行：{{result.timeGod.wuxing}} | 方位：{{result.timeGod.direction}}</text>
+          <text class="god-card-poem">{{result.timeGod.poem}}</text>
+          <text class="god-card-meaning">{{result.timeGod.meaning}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 卦辞总解 -->
+    <view class="section">
+      <view class="section-title">📖 卦辞总解</view>
+      <view class="summary-box">
+        <text class="summary-text">
+          {{result.ganZhi}}{{result.lunarMonthStr}}{{result.lunarDayStr}}，{{result.hourStr}}。
+        </text>
+        <text class="summary-text">
+          月宫{{result.monthGod.name}}，{{result.monthGod.meaning}}
+        </text>
+        <text class="summary-text">
+          日宫{{result.dayGod.name}}，{{result.dayGod.meaning}}
+        </text>
+        <text class="summary-text">
+          时宫{{result.timeGod.name}}，{{result.timeGod.meaning}}
+        </text>
+      </view>
+    </view>
+
+  </block>
+
+  <!-- 未起卦提示 -->
+  <view class="empty-hint" wx:if="{{!result}}">
+    <text>选择日期和时辰后点击"起卦"</text>
+  </view>
+</view>

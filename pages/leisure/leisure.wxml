@@ -1,0 +1,51 @@
+<!--
+  休闲页面
+  功能：卡片式入口布局，三个功能入口：小六壬占卜、塔罗牌占卜、备忘录
+
+  更新说明：
+  - 卡片式布局展示功能入口
+  - 每个入口有图标和简短说明
+  - 点击进入对应功能页面
+-->
+<view class="container {{themeClass}}">
+
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="page-title">🎮 休闲娱乐</view>
+    <view class="page-subtitle">放松心情，探索未知</view>
+  </view>
+
+  <!-- 功能入口卡片 -->
+  <view class="feature-grid">
+    <!-- 小六壬占卜入口 -->
+    <view class="feature-card" bindtap="goLiuren">
+      <view class="feature-icon">🔮</view>
+      <view class="feature-content">
+        <view class="feature-name">小六壬占卜</view>
+        <view class="feature-desc">选择日期和时辰，起卦问事，探索未知的命运走向</view>
+      </view>
+      <view class="feature-arrow">→</view>
+    </view>
+
+    <!-- 塔罗牌占卜入口 -->
+    <view class="feature-card" bindtap="goTarot">
+      <view class="feature-icon">🃏</view>
+      <view class="feature-content">
+        <view class="feature-name">塔罗牌占卜</view>
+        <view class="feature-desc">选择牌阵，抽牌解读，聆听内心的声音</view>
+      </view>
+      <view class="feature-arrow">→</view>
+    </view>
+
+    <!-- 八字流日运势入口 -->
+    <view class="feature-card" bindtap="goBazi">
+      <view class="feature-icon">📅</view>
+      <view class="feature-content">
+        <view class="feature-name">八字流日运势</view>
+        <view class="feature-desc">根据你的八字，查看今日运势</view>
+      </view>
+      <view class="feature-arrow">→</view>
+    </view>
+  </view>
+
+</view>

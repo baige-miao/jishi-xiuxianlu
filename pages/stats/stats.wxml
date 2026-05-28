@@ -1,0 +1,109 @@
+<!--
+  数据统计页面 - 需求#9
+  本周/本月完成任务数、属性增长曲线、最常完成任务TOP5、灵力累计获取量
+-->
+<view class="container {{themeClass}}">
+  <view class="page-title">📊 数据统计</view>
+
+  <!-- 加载状态 -->
+  <view class="empty" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <block wx:if="{{!loading}}">
+
+    <!-- 概览卡片 -->
+    <view class="stat-cards">
+      <view class="stat-card">
+        <view class="stat-num">{{weekCount}}</view>
+        <view class="stat-label">本周完成</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-num">{{monthCount}}</view>
+        <view class="stat-label">本月完成</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-num">{{spiritStone}}</view>
+        <view class="stat-label">当前灵力 💫</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-num">{{totalSpiritEarned}}</view>
+        <view class="stat-label">累计灵力 📈</view>
+      </view>
+    </view>
+
+    <!-- 评级进度 -->
+    <view class="section">
+      <view class="section-title">🏅 评级进度</view>
+      <view class="rating-current">
+        <text class="rating-current-label">当前评级</text>
+        <text class="rating-current-value">{{userRating}}</text>
+        <text class="rating-current-sum">总值：{{totalAttrSum}}</text>
+      </view>
+      <view class="rating-bar-section">
+        <view class="rating-bar-info">
+          <text>{{userRating}}</text>
+          <text>{{nextRatingLabel}}</text>
+        </view>
+        <view class="rating-bar-outer">
+          <view class="rating-bar-inner" style="width:{{ratingPct}}%"></view>
+        </view>
+        <view class="rating-bar-pct">{{ratingPct}}%</view>
+      </view>
+      <view class="rating-tiers">
+        <view class="rating-tier {{item.active ? 'active' : ''}}" wx:for="{{ratingTiers}}" wx:key="label">
+          <text class="tier-label">{{item.label}}</text>
+          <text class="tier-range">{{item.range}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 最常完成任务 TOP5 -->
+    <view class="section">
+      <view class="section-title">🏆 最常完成任务 TOP5</view>
+      <view class="top5-list" wx:if="{{top5.length > 0}}">
+        <view class="top5-item" wx:for="{{top5}}" wx:key="name">
+          <view class="top5-rank">{{index + 1}}</view>
+          <view class="top5-name">{{item.name}}</view>
+          <view class="top5-count">{{item.count}} 次</view>
+          <view class="top5-bar">
+            <view class="top5-bar-fill" style="width: {{item.pct}}%"></view>
+          </view>
+        </view>
+      </view>
+      <view class="empty-small" wx:else>暂无数据</view>
+    </view>
+
+    <!-- 属性增长曲线（7天） -->
+    <view class="section">
+      <view class="section-title">📈 属性增长曲线（近7天）</view>
+      <view class="chart-area">
+        <view class="chart-bars">
+          <view class="chart-col" wx:for="{{attrGrowth7}}" wx:key="date">
+            <view class="chart-bar-wrapper">
+              <view class="chart-bar" style="height: {{item.barHeight}}%"></view>
+            </view>
+            <view class="chart-date">{{item.shortDate}}</view>
+            <view class="chart-value">{{item.totalChange}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 属性增长曲线（30天） -->
+    <view class="section">
+      <view class="section-title">📈 属性增长曲线（近30天）</view>
+      <view class="chart-area">
+        <view class="chart-bars">
+          <view class="chart-col" wx:for="{{attrGrowth30}}" wx:key="date">
+            <view class="chart-bar-wrapper">
+              <view class="chart-bar" style="height: {{item.barHeight}}%"></view>
+            </view>
+            <view class="chart-date">{{item.shortDate}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </block>
+</view>

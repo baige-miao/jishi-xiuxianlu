@@ -1,0 +1,492 @@
+<!--
+  主面板页面 - 卡片流布局
+  需求覆盖：功能#4 应急任务、功能#5 任务删除、功能#7 用户评级、功能#8 修仙等级
+-->
+<view class="page {{themeClass}}">
+
+  <!-- 运势弹窗 -->
+  <view class="modal-mask" wx:if="{{showFortuneModal}}" bindtap="closeFortuneModal">
+    <view class="modal fortune-modal" catchtap>
+      <view class="modal-title">今日运势</view>
+      <view class="fortune-modal-date">{{fortuneData.liuri.ganzhi}}日 · {{fortuneData.shishen}} · {{fortuneData.strength}}</view>
+      <view class="fortune-modal-level {{fortuneData.luck_level === '大吉' || fortuneData.luck_level === '吉' ? 'text-success' : fortuneData.luck_level === '凶' || fortuneData.luck_level === '大凶' ? 'text-danger' : 'text-dim'}}">
+        {{fortuneData.luck_level}}
+      </view>
+      <view class="fortune-modal-summary">{{fortuneData.summary}}</view>
+      <view class="modal-actions">
+        <button class="btn-cancel" bindtap="closeFortuneModal">知道了</button>
+        <button class="btn-confirm" bindtap="goFortuneDetail">查看详情</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主面板分步引导遮罩 -->
+  <view class="guide-mask" wx:if="{{showPanelGuide}}">
+    <view class="guide-highlight" wx:if="{{panelGuideStep <= 6}}" style="top:{{highlightTop}}px;left:{{highlightLeft}}px;width:{{highlightWidth}}px;height:{{highlightHeight}}px;"></view>
+    <view class="guide-tabbar-arrow-area" wx:if="{{panelGuideStep >= 7}}">
+      <view class="guide-arrow" wx:if="{{panelGuideStep === 7}}" style="left: 37.5%;">
+        <view class="guide-arrow-icon">👇</view>
+      </view>
+      <view class="guide-arrow" wx:if="{{panelGuideStep === 8}}" style="left: 62.5%;">
+        <view class="guide-arrow-icon">👇</view>
+      </view>
+      <view class="guide-arrow" wx:if="{{panelGuideStep === 9}}" style="left: 87.5%;">
+        <view class="guide-arrow-icon">👇</view>
+      </view>
+    </view>
+    <view class="guide-tooltip" style="{{tooltipStyle}}">
+      <view class="guide-tooltip-title">{{panelGuideTexts[panelGuideStep - 1].title}}</view>
+      <view class="guide-tooltip-content">{{panelGuideTexts[panelGuideStep - 1].content}}</view>
+      <view class="guide-tooltip-footer">
+        <view class="guide-step-indicator">
+          <text>{{panelGuideStep}} / {{panelGuideTexts.length}}</text>
+        </view>
+        <view class="guide-btns">
+          <button class="guide-btn guide-btn-skip" bindtap="skipPanelGuide">跳过</button>
+          <button class="guide-btn guide-btn-next" bindtap="nextPanelGuide">
+            {{panelGuideStep >= panelGuideTexts.length ? '完成' : '下一步'}}
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主内容区 - 卡片流 -->
+  <scroll-view class="main" scroll-y>
+
+    <!-- 加载状态 -->
+    <view class="loading" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+
+    <block wx:if="{{!loading && panelData}}">
+
+      <!-- Card 1: 玩家信息卡 -->
+      <view class="card player-card" id="guide-player">
+        <view class="card-header">
+          <view class="card-logo">⚔ 记事修仙录</view>
+          <view class="help-icon" bindtap="goHelp">📖</view>
+        </view>
+        <view class="player-name">{{playerName}}</view>
+        <view class="player-detail">年龄：{{playerAge}} · 更新：{{lastUpdate}}</view>
+        <!-- 评级 -->
+        <view class="rating-row" id="guide-rating" bindtap="showLevels">
+          <view class="rating-left">
+            <text class="rating-label">评级</text>
+            <text class="rating-value">{{userRating}}</text>
+          </view>
+          <view class="rating-right">
+            <text class="rating-total">得分：{{ratingScore}}</text>
+            <text class="rating-next">→ {{nextRatingLabel}}</text>
+          </view>
+        </view>
+        <view class="rating-bar-outer" bindtap="showLevels">
+          <view class="rating-bar-inner" style="width:{{ratingPct}}%"></view>
+        </view>
+        <!-- 修仙等级 -->
+        <view class="cultivation-row" id="guide-cultivation" wx:if="{{cultivationEnabled}}">
+          <view class="cultivation-item">
+            <text class="cultivation-label">修仙</text>
+            <text class="cultivation-value">{{cultivationDisplay}}</text>
+          </view>
+          <view class="cultivation-item">
+            <text class="cultivation-label">灵力</text>
+            <text class="cultivation-value spirit">💫 {{spiritStone}}</text>
+          </view>
+        </view>
+        <!-- 运势收纳条 -->
+        <view class="fortune-mini" wx:if="{{fortuneMinimized && fortuneData}}" bindtap="goFortuneDetail">
+          <text class="fortune-mini-text">今日：{{fortuneData.luck_level}} · {{fortuneData.shishen}} · {{fortuneData.strength}}</text>
+          <text class="fortune-mini-arrow">▸</text>
+        </view>
+      </view>
+
+      <!-- Card 2: 打卡 + 每日进度 -->
+      <view class="card streak-card" id="guide-daily">
+        <view class="streak-row">
+          <view class="streak-left">
+            <view class="streak-num">{{streak}}</view>
+            <view class="streak-label">🔥 连续打卡</view>
+          </view>
+          <view class="streak-right">
+            <view class="progress-label">📋 每日任务</view>
+            <view class="progress-bar-outer">
+              <view class="progress-bar-inner" style="width: {{dailyPct}}%"></view>
+            </view>
+            <view class="progress-pct">{{dailyDone}}/{{dailyTotal}}</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- Card 3: 属性面板 -->
+      <view class="card attrs-card" id="guide-attrs">
+        <view class="card-title-row">
+          <view class="card-title">属性</view>
+          <view class="add-attr-btn" bindtap="showAddAttr">＋</view>
+        </view>
+        <block wx:for="{{attrGroups}}" wx:key="grp">
+          <view class="attr-group-title">▸ {{item.grp}}</view>
+          <view class="attr-columns">
+            <view class="attr-col">
+              <view
+                class="attr-item {{expandedAttr === attr.name ? 'expanded' : ''}}"
+                wx:for="{{item.left}}"
+                wx:for-item="attr"
+                wx:key="name"
+                bindtap="toggleAttrCard"
+                bindlongpress="onAttrLongPress"
+                data-name="{{attr.name}}"
+                data-grp="{{item.grp}}"
+              >
+                <view class="attr-item-header">
+                  <view>
+                    <view class="attr-name {{attr.valClass}}">{{attr.name}}</view>
+                    <view class="attr-value {{attr.valClass}}">{{attr.value}}<text class="attr-edit-icon" wx:if="{{attr.isMind}}" catchtap="showAttrSlider" data-name="{{attr.name}}">✏️</text></view>
+                  </view>
+                  <view class="attr-level">{{attr.level}}</view>
+                </view>
+                <view class="attr-item-detail">
+                  <view class="attr-detail-inner">
+                    <view class="attr-bar">
+                      <view class="attr-bar-fill {{attr.valBgClass}}" style="width:{{attr.pct}}%"></view>
+                    </view>
+                    <view class="attr-detail-actions">
+                      <view class="attr-progress-text">{{attr.value}}/{{attr.maxValue}}</view>
+                      <view class="attr-action-links">
+                        <view class="attr-action-link attr-link-detail" catchtap="showAttrDetail" data-name="{{attr.name}}" data-grp="{{item.grp}}">详情</view>
+                        <view class="attr-action-link attr-link-delete" catchtap="deleteAttr" data-name="{{attr.name}}">删除</view>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view class="attr-col">
+              <view
+                class="attr-item {{expandedAttr === attr.name ? 'expanded' : ''}}"
+                wx:for="{{item.right}}"
+                wx:for-item="attr"
+                wx:key="name"
+                bindtap="toggleAttrCard"
+                bindlongpress="onAttrLongPress"
+                data-name="{{attr.name}}"
+                data-grp="{{item.grp}}"
+              >
+                <view class="attr-item-header">
+                  <view>
+                    <view class="attr-name {{attr.valClass}}">{{attr.name}}</view>
+                    <view class="attr-value {{attr.valClass}}">{{attr.value}}<text class="attr-edit-icon" wx:if="{{attr.isMind}}" catchtap="showAttrSlider" data-name="{{attr.name}}">✏️</text></view>
+                  </view>
+                  <view class="attr-level">{{attr.level}}</view>
+                </view>
+                <view class="attr-item-detail">
+                  <view class="attr-detail-inner">
+                    <view class="attr-bar">
+                      <view class="attr-bar-fill {{attr.valBgClass}}" style="width:{{attr.pct}}%"></view>
+                    </view>
+                    <view class="attr-detail-actions">
+                      <view class="attr-progress-text">{{attr.value}}/{{attr.maxValue}}</view>
+                      <view class="attr-action-links">
+                        <view class="attr-action-link attr-link-detail" catchtap="showAttrDetail" data-name="{{attr.name}}" data-grp="{{item.grp}}">详情</view>
+                        <view class="attr-action-link attr-link-delete" catchtap="deleteAttr" data-name="{{attr.name}}">删除</view>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+
+      <!-- Card 4: 任务列表 -->
+      <view class="card tasks-card" id="guide-tasks">
+        <view class="card-title">任务</view>
+        <!-- pill 类型切换 -->
+        <view class="pill-tabs">
+          <view
+            class="pill-tab {{activeTaskType === item.type ? 'active' : ''}} {{item.cls}}"
+            wx:for="{{taskSections}}"
+            wx:key="type"
+            bindtap="switchTaskType"
+            data-type="{{item.type}}"
+          >
+            {{item.icon}} {{item.label}}
+          </view>
+        </view>
+        <!-- 当前类型任务列表 -->
+        <view class="task-list">
+          <view class="task-empty" wx:if="{{currentTasks.length === 0}}">暂无任务</view>
+          <task-item
+            wx:for="{{currentTasks}}" wx:for-item="t" wx:key="_id"
+            task="{{t}}"
+            showActions="{{true}}"
+            bind:dotask="doTask"
+            bind:delete="deleteTask"
+            bind:detail="showTaskDetail"
+          />
+        </view>
+        <!-- 已完成阶段任务 -->
+        <block wx:if="{{completedPhase.length > 0}}">
+          <view class="divider"></view>
+          <view class="completed-phase-title text-gold">🏆 已完成的阶段任务</view>
+          <view class="task-list">
+            <task-item
+              wx:for="{{completedPhase}}" wx:key="_id"
+              task="{{item}}"
+              showActions="{{false}}"
+              showBadge="{{true}}"
+              extraClass="completed-phase"
+            />
+          </view>
+        </block>
+      </view>
+
+      <!-- Card 5: 快捷操作 -->
+      <view class="card actions-card" id="guide-actions">
+        <button class="action-btn primary" bindtap="showAddTask">＋ 添加任务</button>
+        <view class="breakthrough-section" wx:if="{{cultivationEnabled && breakthrough}}">
+          <button class="btn-breakthrough" bindtap="doBreakthrough">
+            💫 修仙突破（需要 {{breakthrough.cost}} 灵力）
+          </button>
+          <view class="breakthrough-hint">当前灵力：{{spiritStone}}，目标：{{breakthrough.target}}</view>
+        </view>
+      </view>
+
+      <!-- Card 6: 提醒事项 -->
+      <view class="card reminder-card">
+        <view class="card-title">⏰ 每日提醒</view>
+        <view class="reminder-btn-row" wx:if="{{reminders.length > 0}}">
+          <button class="reminder-list-btn" bindtap="showRemindersModal">
+            已设置 {{reminders.length}} 个提醒
+          </button>
+        </view>
+        <view class="reminder-hint" wx:if="{{reminders.length === 0}}">未设置提醒</view>
+        <input class="reminder-input" placeholder="提醒内容（如：该学习了）" value="{{newReminderContent}}" bindinput="onNewReminderContentInput" maxlength="20" />
+        <view class="reminder-row">
+          <picker mode="time" value="{{newReminderTime}}" bindchange="onNewReminderTimeChange">
+            <button class="reminder-btn">＋ 添加提醒</button>
+          </picker>
+        </view>
+        <button class="reminder-auth-btn" bindtap="authorizeReminder" wx:if="{{reminders.length > 0}}">🔔 开启推送通知</button>
+      </view>
+
+    </block>
+  </scroll-view>
+
+  <!-- 提醒列表弹窗 -->
+  <view class="reminders-modal-mask" wx:if="{{showRemindersModal}}" bindtap="hideRemindersModal">
+    <view class="reminders-modal" catchtap="">
+      <view class="reminders-modal-title">已设置的提醒</view>
+      <view class="reminders-modal-list">
+        <view class="reminders-modal-item" wx:for="{{reminders}}" wx:key="index">
+          <view class="reminders-modal-item-left">
+            <text class="reminders-modal-time">{{item.time}}</text>
+            <text class="reminders-modal-content">{{item.content}}</text>
+          </view>
+          <view class="reminders-modal-delete" data-index="{{index}}" bindtap="deleteReminder">✕</view>
+        </view>
+        <view class="reminders-modal-empty" wx:if="{{reminders.length === 0}}">暂无提醒</view>
+      </view>
+      <button class="reminders-modal-close" bindtap="hideRemindersModal">关闭</button>
+    </view>
+  </view>
+
+  <!-- 添加任务弹窗 -->
+  <view class="modal-mask" wx:if="{{showModal}}" bindtap="closeModal">
+    <view class="modal" catchtap>
+      <view class="modal-title">＋ 添加新任务</view>
+      <view class="form-row">
+        <input class="form-input flex3" placeholder="任务名称" value="{{newTask.name}}" bindinput="onNewTaskName" />
+        <picker class="form-input flex1" range="{{typeOptions}}" value="{{newTask.typeIndex}}" bindchange="onNewTaskType">
+          <view class="picker-text">{{typeOptions[newTask.typeIndex]}}</view>
+        </picker>
+      </view>
+      <view class="form-row">
+        <input class="form-input" placeholder="奖励规则：心情+5，耐力+3" value="{{newTask.rewardsStr}}" bindinput="onNewTaskRewards" />
+      </view>
+      <view class="form-row">
+        <input class="form-input" placeholder="任务描述（可选）" value="{{newTask.desc}}" bindinput="onNewTaskDesc" />
+      </view>
+      <view class="modal-actions">
+        <button class="btn-cancel" bindtap="closeModal">取消</button>
+        <button class="btn-confirm" loading="{{submittingTask}}" disabled="{{submittingTask}}" bindtap="submitAddTask">确认添加</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 任务完成结果弹窗 -->
+  <view class="modal-mask" wx:if="{{showResultModal}}" bindtap="closeResultModal">
+    <view class="modal result-modal" catchtap>
+      <view class="modal-title">{{resultTitle}}</view>
+      <view class="result-lines">
+        <view wx:for="{{resultLines}}" wx:key="index" class="result-line {{item.type}}">
+          <text>{{item.icon}} {{item.text}}</text>
+        </view>
+      </view>
+      <view class="modal-actions">
+        <button class="btn-confirm" bindtap="closeResultModal">好的</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加属性弹窗 -->
+  <view class="modal-mask" wx:if="{{showAttrModal}}" bindtap="closeAttrModal">
+    <view class="modal" catchtap>
+      <view class="modal-title">＋ 添加新属性</view>
+      <view class="form-row">
+        <input class="form-input flex2" placeholder="属性名称" value="{{newAttr.name}}" bindinput="onAttrNameInput" />
+        <input class="form-input flex1" type="number" placeholder="初始值" value="{{newAttr.value}}" bindinput="onAttrValueInput" />
+      </view>
+      <view class="form-row">
+        <picker class="form-input flex1" range="{{grpOptions}}" value="{{newAttr.grpIndex}}" bindchange="onAttrGrpChange">
+          <view class="attr-grp-text">分组：{{grpOptions[newAttr.grpIndex]}}</view>
+        </picker>
+      </view>
+      <view class="modal-actions">
+        <button class="btn-cancel" bindtap="closeAttrModal">取消</button>
+        <button class="btn-confirm" loading="{{submittingAttr}}" disabled="{{submittingAttr}}" bindtap="submitAddAttr">确认添加</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 等级制度弹窗 -->
+  <view class="modal-mask" wx:if="{{showLevelsModal}}" bindtap="closeLevels">
+    <view class="modal levels-modal" catchtap>
+      <view class="modal-title">📊 等级制度</view>
+      <view class="levels-tabs">
+        <view class="levels-tab {{levelsTab===0?'active':''}}" bindtap="switchLevelsTab" data-tab="0">属性等级</view>
+        <view class="levels-tab {{levelsTab===1?'active':''}}" bindtap="switchLevelsTab" data-tab="1" wx:if="{{cultivationEnabled}}">修仙境界</view>
+        <view class="levels-tab {{levelsTab===2?'active':''}}" bindtap="switchLevelsTab" data-tab="2">用户评级</view>
+        <view class="levels-tab {{levelsTab===3?'active':''}}" bindtap="switchLevelsTab" data-tab="3">心境专属</view>
+      </view>
+      <scroll-view class="levels-body" scroll-y wx:if="{{levelsTab===0}}">
+        <view class="levels-group-title">通用等级</view>
+        <view class="levels-row" wx:for="{{stdLevels}}" wx:key="label">
+          <text class="levels-range">{{item.range}}</text>
+          <text class="levels-label">{{item.label}}</text>
+        </view>
+        <view class="levels-group-title">学识专属</view>
+        <view class="levels-row" wx:for="{{knowledgeLevels}}" wx:key="label">
+          <text class="levels-range">{{item.range}}</text>
+          <text class="levels-label">{{item.label}}</text>
+        </view>
+        <view class="levels-group-title">体质专属</view>
+        <view class="levels-row" wx:for="{{bodyLevels}}" wx:key="label">
+          <text class="levels-range">{{item.range}}</text>
+          <text class="levels-label">{{item.label}}</text>
+        </view>
+      </scroll-view>
+      <scroll-view class="levels-body" scroll-y wx:if="{{levelsTab===1 && cultivationEnabled}}">
+        <view class="levels-row" wx:for="{{cultivationRealms}}" wx:key="name">
+          <text class="levels-range">{{item.name}}</text>
+          <text class="levels-label">{{item.detail}}</text>
+        </view>
+        <view class="levels-hint">完成任务获得灵力，灵力足够时可突破境界</view>
+      </scroll-view>
+      <scroll-view class="levels-body" scroll-y wx:if="{{levelsTab===2}}">
+        <view class="levels-row" wx:for="{{userRatings}}" wx:key="label">
+          <text class="levels-range">{{item.range}}</text>
+          <text class="levels-label">{{item.label}}</text>
+        </view>
+        <view class="levels-hint">评级根据所有属性值总和计算</view>
+      </scroll-view>
+      <scroll-view class="levels-body" scroll-y wx:if="{{levelsTab===3}}">
+        <view class="levels-group-title">精神</view>
+        <view class="levels-row" wx:for="{{mentalLevels}}" wx:key="label">
+          <text class="levels-range">{{item.range}}</text>
+          <text class="levels-label">{{item.label}}</text>
+        </view>
+        <view class="levels-group-title">意志力</view>
+        <view class="levels-row" wx:for="{{willpowerLevels}}" wx:key="label">
+          <text class="levels-range">{{item.range}}</text>
+          <text class="levels-label">{{item.label}}</text>
+        </view>
+        <view class="levels-group-title">心情</view>
+        <view class="levels-row" wx:for="{{moodLevels}}" wx:key="label">
+          <text class="levels-range">{{item.range}}</text>
+          <text class="levels-label">{{item.label}}</text>
+        </view>
+        <view class="levels-hint">心境属性上限100，满级为100</view>
+      </scroll-view>
+      <view class="modal-actions">
+        <button class="btn-confirm" bindtap="closeLevels">知道了</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 属性详情弹窗 -->
+  <view class="modal-mask" wx:if="{{showAttrDetailModal}}" bindtap="closeAttrDetail">
+    <view class="modal attr-detail-modal" catchtap>
+      <view class="modal-title">{{attrDetail.name}}</view>
+      <view class="attr-detail-info">
+        <view class="attr-detail-stat">
+          <text class="attr-detail-stat-label">当前值</text>
+          <text class="attr-detail-stat-value">{{attrDetail.value}}</text>
+        </view>
+        <view class="attr-detail-stat">
+          <text class="attr-detail-stat-label">等级</text>
+          <text class="attr-detail-stat-value">{{attrDetail.level}}</text>
+        </view>
+        <view class="attr-detail-stat">
+          <text class="attr-detail-stat-label">分组</text>
+          <text class="attr-detail-stat-value">{{attrDetail.grp}}</text>
+        </view>
+      </view>
+      <view class="attr-detail-bar-outer">
+        <view class="attr-detail-bar-inner" style="width:{{attrDetail.pct}}%"></view>
+      </view>
+      <view class="attr-detail-bar-text">{{attrDetail.value}} / {{attrDetail.maxValue}}</view>
+      <view class="attr-detail-section-title">关联任务</view>
+      <view class="attr-detail-task-list" wx:if="{{attrDetail.relatedTasks.length > 0}}">
+        <view class="attr-detail-task {{expandedTaskIdx === index ? 'expanded' : ''}}" wx:for="{{attrDetail.relatedTasks}}" wx:key="name" bindtap="toggleTaskDesc" data-index="{{index}}">
+          <view class="attr-detail-task-header">
+            <text class="attr-detail-task-name">{{item.name}}</text>
+            <text class="attr-detail-task-type">{{item.type}}</text>
+          </view>
+          <view class="attr-detail-task-reward">
+            <text>{{item.delta > 0 ? '+' : ''}}{{item.delta}}</text>
+          </view>
+          <view class="attr-detail-task-desc" wx:if="{{item.description && expandedTaskIdx === index}}">{{item.description}}</view>
+          <view class="attr-detail-task-hint" wx:if="{{item.description && expandedTaskIdx !== index}}">点击查看详情</view>
+        </view>
+      </view>
+      <view class="attr-detail-empty" wx:if="{{attrDetail.relatedTasks.length === 0}}">
+        暂无关联任务
+      </view>
+      <view class="modal-actions">
+        <button class="btn-confirm" bindtap="closeAttrDetail">知道了</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 任务详情弹窗 -->
+  <view class="modal-mask" wx:if="{{showTaskDetailModal}}" bindtap="closeTaskDetail">
+    <view class="modal" catchtap>
+      <view class="modal-title">{{taskDetail.name}}</view>
+      <view class="task-detail-desc">{{taskDetail.description || '无'}}</view>
+      <view class="modal-actions">
+        <button class="btn-confirm" bindtap="closeTaskDetail">知道了</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 属性滑块弹窗 -->
+  <view class="modal-mask" wx:if="{{showAttrSliderModal}}" bindtap="closeAttrSlider">
+    <view class="modal" catchtap>
+      <view class="modal-title">调整 {{sliderAttrName}}</view>
+      <view class="slider-value-display">{{sliderValue}}</view>
+      <slider min="0" max="100" step="1" value="{{sliderValue}}" activeColor="var(--accent)" bindchanging="onAttrSliderChange" bindchange="onAttrSliderChange" />
+      <view class="slider-labels">
+        <text>0</text>
+        <text>50</text>
+        <text>100</text>
+      </view>
+      <view class="modal-actions">
+        <button class="btn-cancel" bindtap="closeAttrSlider">取消</button>
+        <button class="btn-confirm" bindtap="submitAttrUpdate">确认</button>
+      </view>
+    </view>
+  </view>
+
+</view>

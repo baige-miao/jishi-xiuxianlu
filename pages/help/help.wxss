@@ -1,0 +1,434 @@
+/**
+ * 帮助说明页面样式
+ * 视觉风格与主应用一致，使用 CSS 变量
+ */
+
+/* 页面容器 */
+.help-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===== 标签页导航 ===== */
+.tabs-scroll {
+  background: var(--card-bg);
+  border-bottom: 1rpx solid var(--border);
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tabs {
+  display: inline-flex;
+  padding: 16rpx 20rpx;
+}
+
+.tab {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  margin-right: 16rpx;
+  border-radius: 12rpx;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.tab.active {
+  background: var(--accent-alpha-bg);
+  border: 1rpx solid var(--accent-alpha-border);
+}
+
+.tab-icon {
+  font-size: 36rpx;
+  margin-bottom: 8rpx;
+}
+
+.tab-text {
+  font-size: 22rpx;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+.tab.active .tab-text {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ===== 内容区域 ===== */
+.content-scroll {
+  flex: 1;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.tab-content {
+  animation: fadeIn 0.3s ease;
+  padding: 24rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 内容块 ===== */
+.section {
+  background: var(--card-bg);
+  border: 1rpx solid var(--border);
+  border-radius: 16rpx;
+  margin-bottom: 24rpx;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--accent);
+  padding: 24rpx 24rpx 16rpx;
+  border-bottom: 1rpx solid var(--border);
+}
+
+.section-body {
+  padding: 24rpx;
+  word-break: break-all;
+}
+
+/* ===== 文本样式 ===== */
+.text {
+  font-size: 28rpx;
+  color: var(--text);
+  line-height: 1.6;
+  display: block;
+  word-break: break-all;
+}
+
+.text.hint {
+  font-size: 24rpx;
+  color: var(--dim);
+  margin-top: 16rpx;
+}
+
+.highlight {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ===== 信息框 ===== */
+.info-box {
+  margin-top: 16rpx;
+  padding: 16rpx 20rpx;
+  background: var(--accent-alpha-bg);
+  border: 1rpx solid var(--accent-alpha-border);
+  border-radius: 10rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.info-text {
+  font-size: 26rpx;
+  color: var(--accent);
+}
+
+.warning-box {
+  margin-top: 16rpx;
+  padding: 16rpx 20rpx;
+  background: var(--gold-alpha-bg);
+  border: 1rpx solid var(--gold-alpha-border);
+  border-radius: 10rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.warning-text {
+  font-size: 26rpx;
+  color: var(--gold);
+}
+
+.example-box {
+  margin-top: 16rpx;
+  padding: 16rpx 20rpx;
+  background: var(--bg);
+  border-radius: 10rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.example-title {
+  font-size: 24rpx;
+  color: var(--dim);
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.example-text {
+  font-size: 28rpx;
+  color: var(--accent2);
+  font-weight: 600;
+}
+
+/* ===== 核心概念 ===== */
+.concept-item {
+  margin-bottom: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid var(--border);
+}
+
+.concept-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.concept-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.concept-desc {
+  font-size: 26rpx;
+  color: var(--dim);
+  line-height: 1.5;
+}
+
+/* ===== 使用流程 ===== */
+.flow-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 24rpx;
+}
+
+.flow-item:last-child {
+  margin-bottom: 0;
+}
+
+.flow-step {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #ffffff;
+  font-size: 24rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.flow-content {
+  flex: 1;
+}
+
+.flow-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text);
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.flow-desc {
+  font-size: 24rpx;
+  color: var(--dim);
+}
+
+/* ===== 等级列表 ===== */
+.level-list {
+  margin-top: 16rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.level-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12rpx 16rpx;
+  border-bottom: 1rpx solid var(--border);
+}
+
+.level-item:last-child {
+  border-bottom: none;
+}
+
+.level-range {
+  font-size: 26rpx;
+  color: var(--dim);
+  width: 120rpx;
+}
+
+.level-label {
+  font-size: 26rpx;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ===== 任务类型 ===== */
+.type-item {
+  margin-bottom: 24rpx;
+  padding: 20rpx;
+  background: var(--bg);
+  border-radius: 12rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.type-item:last-child {
+  margin-bottom: 0;
+}
+
+.type-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.type-icon {
+  font-size: 32rpx;
+  margin-right: 12rpx;
+}
+
+.type-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+
+.type-spirit {
+  font-size: 24rpx;
+  color: var(--spirit-color);
+  font-weight: 600;
+}
+
+.type-desc {
+  font-size: 26rpx;
+  color: var(--dim);
+  line-height: 1.5;
+}
+
+/* ===== 列表样式 ===== */
+.list {
+  margin-top: 16rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.list-item {
+  font-size: 26rpx;
+  color: var(--text);
+  padding: 8rpx 0 8rpx 24rpx;
+  position: relative;
+}
+
+.list-item::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.highlight-item {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ===== 境界列表 ===== */
+.realm-list {
+  margin-top: 16rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.realm-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx;
+  border-bottom: 1rpx solid var(--border);
+}
+
+.realm-item:last-child {
+  border-bottom: none;
+}
+
+.realm-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.realm-desc {
+  font-size: 24rpx;
+  color: var(--dim);
+}
+
+/* ===== 问答列表 ===== */
+.qa-item {
+  margin-bottom: 24rpx;
+  padding-bottom: 24rpx;
+  border-bottom: 1rpx solid var(--border);
+}
+
+.qa-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.qa-question,
+.qa-answer {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12rpx;
+}
+
+.qa-answer {
+  margin-bottom: 0;
+}
+
+.qa-icon {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+}
+
+.qa-question .qa-icon {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.qa-answer .qa-icon {
+  background: var(--accent2);
+  color: #ffffff;
+}
+
+.qa-text {
+  font-size: 28rpx;
+  color: var(--text);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.qa-answer .qa-text {
+  color: var(--dim);
+}

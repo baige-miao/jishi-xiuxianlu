@@ -1,0 +1,440 @@
+<!--
+  生活页面
+  功能：日记 | 统计 | 日志 | 书本 四个标签页
+-->
+<view class="container {{themeClass}}" style="background:var(--book-bg)">
+
+  <!-- 银河背景（星河页全屏） -->
+  <view class="galaxy-full" wx:if="{{activeTab === 'book'}}">
+    <view class="stars-layer">
+      <view class="star s1"></view><view class="star s2"></view><view class="star s3"></view>
+      <view class="star s4"></view><view class="star s5"></view><view class="star s6"></view>
+      <view class="star s7"></view><view class="star s8"></view><view class="star s9"></view>
+      <view class="star s10"></view><view class="star s11"></view><view class="star s12"></view>
+      <view class="star s13"></view><view class="star s14"></view><view class="star s15"></view>
+      <view class="star s16"></view><view class="star s17"></view><view class="star s18"></view>
+      <view class="star s19"></view><view class="star s20"></view>
+      <view class="star s21"></view><view class="star s22"></view><view class="star s23"></view>
+      <view class="star s24"></view><view class="star s25"></view><view class="star s26"></view>
+      <view class="star s27"></view><view class="star s28"></view><view class="star s29"></view>
+      <view class="star s30"></view><view class="star s31"></view><view class="star s32"></view>
+      <view class="star s33"></view><view class="star s34"></view><view class="star s35"></view>
+      <view class="star s36"></view><view class="star s37"></view><view class="star s38"></view>
+      <view class="star s39"></view><view class="star s40"></view><view class="star s41"></view>
+      <view class="star s42"></view><view class="star s43"></view><view class="star s44"></view>
+      <view class="star s45"></view><view class="star s46"></view><view class="star s47"></view>
+      <view class="star s48"></view><view class="star s49"></view><view class="star s50"></view>
+    </view>
+    <view class="milky-way"></view>
+    <view class="milky-way-core"></view>
+    <view class="nebula n1"></view>
+    <view class="nebula n2"></view>
+    <view class="nebula n3"></view>
+    <view class="nebula n4"></view>
+    <view class="nebula n5"></view>
+    <view class="star-cluster sc1"></view>
+    <view class="star-cluster sc2"></view>
+    <view class="star-cluster sc3"></view>
+    <view class="shooting-star ss1"></view>
+    <view class="shooting-star ss2"></view>
+    <view class="shooting-star ss3"></view>
+    <view class="particles">
+      <view class="particle p1"></view><view class="particle p2"></view>
+      <view class="particle p3"></view><view class="particle p4"></view>
+      <view class="particle p5"></view><view class="particle p6"></view>
+      <view class="particle p7"></view><view class="particle p8"></view>
+      <view class="particle p9"></view><view class="particle p10"></view>
+    </view>
+  </view>
+
+  <!-- 顶部标签页 -->
+  <view class="tabs {{activeTab === 'book' ? 'tabs-galaxy' : ''}}">
+    <view class="tab {{activeTab === 'diary' ? 'active' : ''}}" bindtap="switchTab" data-tab="diary">
+      <text class="tab-icon">📝</text>
+      <text class="tab-text">日记</text>
+    </view>
+    <view class="tab {{activeTab === 'stats' ? 'active' : ''}}" bindtap="switchTab" data-tab="stats">
+      <text class="tab-icon">📊</text>
+      <text class="tab-text">统计</text>
+    </view>
+    <view class="tab {{activeTab === 'logs' ? 'active' : ''}}" bindtap="switchTab" data-tab="logs">
+      <text class="tab-icon">📜</text>
+      <text class="tab-text">日志</text>
+    </view>
+    <view class="tab {{activeTab === 'book' ? 'active' : ''}}" bindtap="switchTab" data-tab="book">
+      <text class="tab-icon">🌌</text>
+      <text class="tab-text">星河</text>
+    </view>
+  </view>
+
+  <!-- 分割线 -->
+  <view class="divider {{activeTab === 'book' ? 'divider-galaxy' : ''}}"></view>
+
+  <!-- ===== 日记标签内容 ===== -->
+  <scroll-view class="tab-content" scroll-y wx:if="{{activeTab === 'diary'}}">
+    <!-- 日期导航 -->
+    <view class="diary-date-nav">
+      <view class="date-nav-btn" bindtap="prevDay">◀</view>
+      <view class="date-nav-current" bindtap="pickDate">
+        <text class="date-nav-text">{{currentDate}}</text>
+        <text class="date-nav-label" wx:if="{{isToday}}">今天</text>
+      </view>
+      <view class="date-nav-btn" bindtap="nextDay">▶</view>
+    </view>
+
+    <!-- 心情和天气 -->
+    <view class="diary-mood-weather">
+      <view class="mood-selector">
+        <text class="selector-label">心情</text>
+        <view class="emoji-options">
+          <text class="emoji-opt {{diaryMood === '😊' ? 'selected' : ''}}" bindtap="selectMood" data-emoji="😊">😊</text>
+          <text class="emoji-opt {{diaryMood === '😌' ? 'selected' : ''}}" bindtap="selectMood" data-emoji="😌">😌</text>
+          <text class="emoji-opt {{diaryMood === '😤' ? 'selected' : ''}}" bindtap="selectMood" data-emoji="😤">😤</text>
+          <text class="emoji-opt {{diaryMood === '😢' ? 'selected' : ''}}" bindtap="selectMood" data-emoji="😢">😢</text>
+          <text class="emoji-opt {{diaryMood === '🤩' ? 'selected' : ''}}" bindtap="selectMood" data-emoji="🤩">🤩</text>
+          <text class="emoji-opt {{diaryMood === '😴' ? 'selected' : ''}}" bindtap="selectMood" data-emoji="😴">😴</text>
+        </view>
+      </view>
+      <view class="weather-selector">
+        <text class="selector-label">天气</text>
+        <view class="emoji-options">
+          <text class="emoji-opt {{diaryWeather === '☀️' ? 'selected' : ''}}" bindtap="selectWeather" data-emoji="☀️">☀️</text>
+          <text class="emoji-opt {{diaryWeather === '⛅' ? 'selected' : ''}}" bindtap="selectWeather" data-emoji="⛅">⛅</text>
+          <text class="emoji-opt {{diaryWeather === '🌧️' ? 'selected' : ''}}" bindtap="selectWeather" data-emoji="🌧️">🌧️</text>
+          <text class="emoji-opt {{diaryWeather === '❄️' ? 'selected' : ''}}" bindtap="selectWeather" data-emoji="❄️">❄️</text>
+          <text class="emoji-opt {{diaryWeather === '🌈' ? 'selected' : ''}}" bindtap="selectWeather" data-emoji="🌈">🌈</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 今日完成区（自动生成） -->
+    <view class="diary-section" wx:if="{{autoSummary}}">
+      <view class="diary-section-title">📋 今日完成</view>
+      <view class="diary-auto-summary">{{autoSummary}}</view>
+    </view>
+
+    <!-- 今天想说（手动编辑） -->
+    <view class="diary-section">
+      <view class="diary-section-title">💭 今天想说</view>
+      <view class="diary-content-area" bindtap="openEditor">
+        <text class="diary-content-text" wx:if="{{diaryContent}}">{{diaryContent}}</text>
+        <text class="diary-content-placeholder" wx:else>点击记录今天的心情和想法...</text>
+      </view>
+    </view>
+
+    <!-- 保存状态 -->
+    <view class="diary-save-status" wx:if="{{saveStatus}}">
+      <text>{{saveStatus}}</text>
+    </view>
+
+    <!-- 备忘录 -->
+    <view class="diary-section">
+      <view class="diary-section-title">
+        <text>📋 备忘录</text>
+        <button class="memo-add-btn" bindtap="addMemo">+ 新建</button>
+      </view>
+      <view class="memo-loading" wx:if="{{memoLoading}}">加载中...</view>
+      <view class="memo-list" wx:if="{{!memoLoading && memos.length > 0}}">
+        <view class="memo-card-wrap" wx:for="{{memos}}" wx:key="_id">
+          <view class="memo-card {{swipedId === item._id ? 'swiped' : ''}}"
+                bindtap="editMemo"
+                data-id="{{item._id}}"
+                bindtouchstart="onTouchStart"
+                bindtouchend="onTouchEnd">
+            <view class="memo-title">{{item.title || '无标题'}}</view>
+            <view class="memo-preview">{{item.preview || '暂无内容'}}</view>
+            <view class="memo-time">{{item.timeStr}}</view>
+          </view>
+          <view class="memo-delete-btn {{swipedId === item._id ? 'show' : ''}}"
+                bindtap="deleteMemo"
+                data-id="{{item._id}}">
+            删除
+          </view>
+        </view>
+      </view>
+      <view class="memo-empty" wx:if="{{!memoLoading && memos.length === 0}}">
+        <text>暂无备忘录</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- ===== 统计标签内容 ===== -->
+  <scroll-view class="tab-content" scroll-y wx:if="{{activeTab === 'stats'}}">
+    <view class="empty" wx:if="{{loadingStats}}">
+      <text>加载中...</text>
+    </view>
+
+    <block wx:if="{{!loadingStats}}">
+      <!-- 概览卡片 -->
+      <view class="stat-cards">
+        <view class="stat-card">
+          <view class="stat-num">{{weekCount}}</view>
+          <view class="stat-label">本周完成</view>
+        </view>
+        <view class="stat-card">
+          <view class="stat-num">{{monthCount}}</view>
+          <view class="stat-label">本月完成</view>
+        </view>
+        <view class="stat-card" wx:if="{{cultivationEnabled}}">
+          <view class="stat-num">{{spiritStone}}</view>
+          <view class="stat-label">当前灵力 💫</view>
+        </view>
+        <view class="stat-card" wx:if="{{cultivationEnabled}}">
+          <view class="stat-num">{{totalSpiritEarned}}</view>
+          <view class="stat-label">累计灵力 📈</view>
+        </view>
+      </view>
+
+      <!-- 评级进度 -->
+      <view class="section">
+        <view class="section-title">🏅 评级进度</view>
+        <view class="rating-current">
+          <text class="rating-current-label">当前评级</text>
+          <text class="rating-current-value">{{userRating}}</text>
+          <text class="rating-current-sum">总值：{{totalAttrSum}}</text>
+        </view>
+        <view class="rating-bar-section">
+          <view class="rating-bar-info">
+            <text>{{userRating}}</text>
+            <text>{{nextRatingLabel}}</text>
+          </view>
+          <view class="rating-bar-outer">
+            <view class="rating-bar-inner" style="width:{{ratingPct}}%"></view>
+          </view>
+          <view class="rating-bar-pct">{{ratingPct}}%</view>
+        </view>
+        <view class="rating-tiers">
+          <view class="rating-tier {{item.active ? 'active' : ''}}" wx:for="{{ratingTiers}}" wx:key="label">
+            <text class="tier-label">{{item.label}}</text>
+            <text class="tier-range">{{item.range}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- TOP5 -->
+      <view class="section">
+        <view class="section-title">🏆 最常完成任务 TOP5</view>
+        <view class="top5-list" wx:if="{{top5.length > 0}}">
+          <view class="top5-item" wx:for="{{top5}}" wx:key="name">
+            <view class="top5-rank">{{index + 1}}</view>
+            <view class="top5-name">{{item.name}}</view>
+            <view class="top5-count">{{item.count}} 次</view>
+            <view class="top5-bar">
+              <view class="top5-bar-fill" style="width: {{item.pct}}%"></view>
+            </view>
+          </view>
+        </view>
+        <view class="empty-small" wx:else>暂无数据</view>
+      </view>
+
+      <!-- 增长曲线 7天 -->
+      <view class="section">
+        <view class="section-title">📈 属性增长曲线（近7天）</view>
+        <view class="chart-area">
+          <view class="chart-bars">
+            <view class="chart-col" wx:for="{{attrGrowth7}}" wx:key="date">
+              <view class="chart-bar-wrapper">
+                <view class="chart-bar" style="height: {{item.barHeight}}%"></view>
+              </view>
+              <view class="chart-date">{{item.shortDate}}</view>
+              <view class="chart-value">{{item.totalChange}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 增长曲线 30天 -->
+      <view class="section">
+        <view class="section-title">📈 属性增长曲线（近30天）</view>
+        <view class="chart-area">
+          <view class="chart-bars">
+            <view class="chart-col" wx:for="{{attrGrowth30}}" wx:key="date">
+              <view class="chart-bar-wrapper">
+                <view class="chart-bar" style="height: {{item.barHeight}}%"></view>
+              </view>
+              <view class="chart-date">{{item.shortDate}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+
+  <!-- ===== 日志标签内容 ===== -->
+  <scroll-view class="tab-content" scroll-y wx:if="{{activeTab === 'logs'}}">
+    <view class="empty" wx:if="{{loadingLogs}}">
+      <view class="empty-icon">⏳</view>
+      <text>加载中...</text>
+    </view>
+
+    <view class="empty" wx:if="{{!loadingLogs && logs.length === 0}}">
+      <view class="empty-icon">📭</view>
+      <text>暂无活动记录</text>
+      <text class="empty-sub">快去完成一些任务吧！</text>
+    </view>
+
+    <block wx:if="{{!loadingLogs && logs.length > 0}}">
+      <view class="log-day" wx:for="{{groupedLogs}}" wx:key="date">
+        <view class="log-day-header">
+          📅 {{item.date}} {{item.isToday ? '（今天）' : ''}} · {{item.entries.length}} 条记录
+        </view>
+        <view class="log-entry" wx:for="{{item.entries}}" wx:for-item="entry" wx:key="index">
+          <view class="log-icon">✓</view>
+          <view class="log-body">
+            <view class="log-task-name">{{entry.task_name}}</view>
+            <view class="log-changes">→ {{entry.changesStr}}</view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+
+  <!-- ===== 书本标签：银河 ===== -->
+  <view class="tab-content book-tab" wx:if="{{activeTab === 'book'}}">
+
+    <view class="book-tab-inner">
+      <!-- 空状态 -->
+      <view class="empty" wx:if="{{!loadingBooks && bookVolumes.length === 0}}">
+        <text class="empty-icon">📖</text>
+        <text wx:if="{{cultivationEnabled}}">灵书阁空空如也</text>
+        <text wx:else>还没有日记</text>
+        <text class="empty-sub" wx:if="{{cultivationEnabled}}">快去记录你的修行历程吧</text>
+        <text class="empty-sub" wx:else>快去写一篇吧</text>
+      </view>
+
+      <view class="loading" wx:if="{{loadingBooks}}">
+        <text wx:if="{{cultivationEnabled}}">拾取时光碎片中...</text>
+        <text wx:else>加载中...</text>
+      </view>
+
+      <!-- 气泡日记 -->
+      <view class="bubbles-area" wx:if="{{!loadingBooks && bookVolumes.length > 0}}">
+        <block wx:for="{{bookVolumes}}" wx:key="year">
+          <view class="bubble-year">{{item.year}}年</view>
+          <view class="bubble-row">
+            <view class="diary-bubble {{liftingBook === book.yearMonth ? 'popping' : ''}}"
+                  wx:for="{{item.books}}" wx:for-item="book" wx:key="yearMonth"
+                  style="animation-delay:{{index * 0.12}}s;--bubble-color:{{book.color}};"
+                  bindtap="openReading" data-month="{{book.yearMonth}}">
+              <view class="bubble-glow" style="background:{{book.color}};"></view>
+              <view class="bubble-inner">
+                <text class="bubble-emoji">{{cultivationEnabled ? '✨' : '📖'}}</text>
+                <text class="bubble-label">{{book.shortLabel}}</text>
+                <text class="bubble-count">{{book.count}}篇</text>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 阅读视图 ===== -->
+  <view class="reading-overlay {{readingReady ? 'visible' : ''}}" wx:if="{{readingReady}}">
+    <view class="reading-bg">
+      <view class="stars-layer">
+        <view class="star s1"></view><view class="star s2"></view><view class="star s3"></view>
+        <view class="star s4"></view><view class="star s5"></view><view class="star s6"></view>
+        <view class="star s7"></view><view class="star s8"></view><view class="star s9"></view>
+        <view class="star s10"></view><view class="star s11"></view><view class="star s12"></view>
+        <view class="star s13"></view><view class="star s14"></view><view class="star s15"></view>
+      </view>
+      <view class="milky-way"></view>
+      <view class="milky-way-core"></view>
+      <view class="nebula n1"></view>
+      <view class="nebula n2"></view>
+      <view class="star-cluster sc1"></view>
+      <view class="star-cluster sc2"></view>
+      <view class="shooting-star ss1"></view>
+      <view class="shooting-star ss2"></view>
+      <view class="reading-particles">
+        <view class="rp rp1"></view><view class="rp rp2"></view><view class="rp rp3"></view>
+        <view class="rp rp4"></view><view class="rp rp5"></view><view class="rp rp6"></view>
+        <view class="rp rp7"></view><view class="rp rp8"></view>
+      </view>
+    </view>
+
+    <view class="reading-nav">
+      <view class="nav-back" bindtap="closeReading">
+        <text class="nav-arrow">‹</text>
+        <text>返回</text>
+      </view>
+      <view class="nav-center">
+        <text class="nav-title">{{readingTitle}}</text>
+        <text class="nav-sub">{{flipIndex + 1}} / {{flipPages.length}}</text>
+      </view>
+      <view class="nav-placeholder"></view>
+    </view>
+
+    <view class="reading-body"
+          catchtouchstart="onReadTouchStart" catchtouchmove="onReadTouchMove" catchtouchend="onReadTouchEnd">
+      <view class="glass-card {{pageDirection}}" wx:if="{{flipCurrent}}">
+        <view class="gc-glow"></view>
+        <view class="gc-header">
+          <text class="gc-date">{{flipCurrent.dateInfo}}</text>
+          <text class="gc-emoji" wx:if="{{flipCurrent.emojis}}">{{flipCurrent.emojis}}</text>
+        </view>
+        <view class="gc-divider"></view>
+        <scroll-view class="gc-body" scroll-y>
+          <view class="gc-summary" wx:if="{{flipCurrent.auto_summary}}">
+            <text class="gc-summary-label">今日概览</text>
+            <text class="starlight-text">{{flipCurrent.auto_summary}}</text>
+          </view>
+          <text class="starlight-text gc-content">{{flipCurrent.content}}</text>
+          <view class="gc-empty" wx:if="{{!flipCurrent.content}}">这一页还是空白的...</view>
+        </scroll-view>
+        <view class="gc-footer">
+          <view class="gc-dots">
+            <view class="gc-dot {{index === flipIndex ? 'active' : ''}}"
+                  wx:for="{{flipPages}}" wx:key="date" wx:if="{{index < 10}}"></view>
+            <view class="gc-dot more" wx:if="{{flipPages.length > 10}}"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 全屏编辑器 -->
+  <view class="editor-overlay" wx:if="{{showEditor}}">
+    <view class="editor-header">
+      <button class="editor-btn editor-cancel" bindtap="closeEditor">取消</button>
+      <text class="editor-title">{{currentDate}}</text>
+      <button class="editor-btn editor-save" bindtap="saveAndClose">保存</button>
+    </view>
+    <textarea
+      class="editor-textarea"
+      value="{{editorContent}}"
+      bindinput="onEditorInput"
+      placeholder="记录今天的心情和想法..."
+      maxlength="2000"
+      auto-height="{{false}}"
+      focus="{{showEditor}}"
+    />
+    <view class="editor-count">{{editorContent.length}}/2000</view>
+  </view>
+
+  <!-- 备忘录全屏编辑器 -->
+  <view class="memo-editor-overlay" wx:if="{{memoEditing}}">
+    <view class="memo-editor-header">
+      <button class="memo-editor-btn memo-editor-cancel" bindtap="cancelMemoEdit">← 返回</button>
+      <view class="memo-editor-status">
+        <text wx:if="{{memoSaveStatus === 'saving'}}">保存中...</text>
+        <text wx:if="{{memoSaveStatus === 'saved'}}">已保存 ✓</text>
+      </view>
+      <button class="memo-editor-btn memo-editor-save" bindtap="saveMemoAndBack">完成</button>
+    </view>
+    <input class="memo-editor-title"
+           placeholder="标题"
+           value="{{memoEditTitle}}"
+           bindinput="onMemoTitleInput"
+           placeholder-style="color: var(--dim);" />
+    <textarea class="memo-editor-content"
+              placeholder="开始记录..."
+              value="{{memoEditContent}}"
+              bindinput="onMemoContentInput"
+              placeholder-style="color: var(--dim);"
+              auto-height="{{false}}"
+              maxlength="-1" />
+  </view>
+
+</view>

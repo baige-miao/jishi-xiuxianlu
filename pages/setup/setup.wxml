@@ -1,0 +1,254 @@
+<!--
+  初始化设置页
+  需求覆盖：Bug#1 逗号分隔兼容、Bug#2 属性负值处理
+
+  更新说明：
+  - 新增"选择模式"步骤（修仙模式/简洁模式）
+  - 新增全屏遮罩引导功能（8步引导）
+  - 初始化前默认使用"轻量简约"(light)主题
+-->
+<view class="container {{themeClass}}">
+
+  <!-- 全屏遮罩引导（根据当前页面步骤显示对应引导） -->
+  <view class="guide-mask" wx:if="{{showGuide && guideTexts[currentStep]}}">
+    <!-- 引导提示框 -->
+    <view class="guide-tooltip">
+      <view class="guide-tooltip-title">{{guideTexts[currentStep].title}}</view>
+      <view class="guide-tooltip-content">{{guideTexts[currentStep].content}}</view>
+      <view class="guide-tooltip-footer">
+        <view class="guide-step-indicator">
+          <text>步骤 {{currentStep}} / 5</text>
+        </view>
+        <view class="guide-btns">
+          <button class="guide-btn guide-btn-skip" bindtap="skipGuide">跳过全部引导</button>
+          <button class="guide-btn guide-btn-next" bindtap="closeGuide">知道了</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 标题 -->
+  <view class="hero">
+    <view class="hero-title">⚔ 记事修仙录</view>
+    <view class="hero-sub">首次使用，请完成以下设置</view>
+  </view>
+
+  <!-- 步骤条（5步） -->
+  <view class="steps">
+    <view class="step-dot {{currentStep >= 1 ? (currentStep > 1 ? 'done' : 'active') : ''}}">1</view>
+    <view class="step-line {{currentStep > 1 ? 'done' : ''}}"></view>
+    <view class="step-dot {{currentStep >= 2 ? (currentStep > 2 ? 'done' : 'active') : ''}}">2</view>
+    <view class="step-line {{currentStep > 2 ? 'done' : ''}}"></view>
+    <view class="step-dot {{currentStep >= 3 ? (currentStep > 3 ? 'done' : 'active') : ''}}">3</view>
+    <view class="step-line {{currentStep > 3 ? 'done' : ''}}"></view>
+    <view class="step-dot {{currentStep >= 4 ? (currentStep > 4 ? 'done' : 'active') : ''}}">4</view>
+    <view class="step-line {{currentStep > 4 ? 'done' : ''}}"></view>
+    <view class="step-dot {{currentStep >= 5 ? 'active' : ''}}">5</view>
+  </view>
+
+  <!-- 步骤1：基本信息 -->
+  <view class="step-section" wx:if="{{currentStep === 1}}">
+    <view class="card" id="guide-step1">
+      <view class="card-title">📝 第 1 步：基本信息</view>
+      <view class="form-row">
+        <view class="form-group flex2">
+          <view class="form-label">你的名字</view>
+          <input class="form-input" placeholder="请输入你的名字" value="{{playerName}}" bindinput="onNameInput" />
+        </view>
+        <view class="form-group flex1">
+          <view class="form-label">年龄</view>
+          <input class="form-input" type="number" placeholder="年龄" value="{{playerAge}}" bindinput="onAgeInput" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 性别选择 -->
+    <view class="card">
+      <view class="card-title">👤 性别</view>
+      <view class="mode-grid gender-grid">
+        <view class="mode-card {{gender === 'male' ? 'mode-active' : ''}}" bindtap="onGenderSelect" data-gender="male">
+          <view class="mode-icon">♂</view>
+          <view class="mode-name">男</view>
+        </view>
+        <view class="mode-card {{gender === 'female' ? 'mode-active' : ''}}" bindtap="onGenderSelect" data-gender="female">
+          <view class="mode-icon">♀</view>
+          <view class="mode-name">女</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 出生日期 -->
+    <view class="card">
+      <view class="card-title">📅 出生日期</view>
+      <view class="form-row">
+        <input class="form-input flex1" type="number" placeholder="年" value="{{birthYear}}" bindinput="onBirthYearInput" />
+        <input class="form-input flex1" type="number" placeholder="月" value="{{birthMonth}}" bindinput="onBirthMonthInput" />
+        <input class="form-input flex1" type="number" placeholder="日" value="{{birthDay}}" bindinput="onBirthDayInput" />
+      </view>
+    </view>
+
+    <!-- 出生时辰（可选） -->
+    <view class="card">
+      <view class="card-title">🕐 出生时辰（可选）</view>
+      <picker range="{{hourOptions}}" value="{{birthHourIndex + 1}}" bindchange="onBirthHourChange">
+        <view class="form-input picker-text">{{birthHourIndex >= 0 ? hourOptions[birthHourIndex + 1] : '点击选择（不知道可跳过）'}}</view>
+      </picker>
+      <view class="hint">时辰用于排时柱，不知道可以跳过</view>
+    </view>
+
+    <!-- 主题选择 -->
+    <view class="card">
+      <view class="card-title">🎨 选择界面主题</view>
+      <view class="theme-grid">
+        <view
+          class="theme-card {{selectedTheme === item.key ? 'theme-active' : ''}}"
+          wx:for="{{themeList}}" wx:key="key"
+          bindtap="selectTheme" data-key="{{item.key}}"
+        >
+          <view class="theme-icon">{{item.icon}}</view>
+          <view class="theme-name">{{item.name}}</view>
+          <view class="theme-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="btn-row">
+      <button class="btn-primary" bindtap="nextStep">下一步 →</button>
+    </view>
+  </view>
+
+  <!-- 步骤2：选择模式（新增） -->
+  <view class="step-section" wx:if="{{currentStep === 2}}">
+    <view class="card" id="guide-step2">
+      <view class="card-title">🎮 第 2 步：选择模式</view>
+      <view class="hint">选择你想要的体验模式。修仙模式会增加游戏化元素，简洁模式专注于核心成长追踪。</view>
+
+      <view class="mode-grid">
+        <!-- 修仙模式 -->
+        <view
+          class="mode-card {{selectedMode === 'cultivation' ? 'mode-active' : ''}}"
+          bindtap="selectMode"
+          data-mode="cultivation"
+        >
+          <view class="mode-icon">⚡</view>
+          <view class="mode-name">修仙模式</view>
+          <view class="mode-desc">增加境界、灵力等游戏元素，让成长更有趣</view>
+          <view class="mode-features">
+            <view class="mode-feature">✓ 修仙境界系统</view>
+            <view class="mode-feature">✓ 灵力收集</view>
+            <view class="mode-feature">✓ 突破进阶</view>
+          </view>
+        </view>
+
+        <!-- 简洁模式 -->
+        <view
+          class="mode-card {{selectedMode === 'simple' ? 'mode-active' : ''}}"
+          bindtap="selectMode"
+          data-mode="simple"
+        >
+          <view class="mode-icon">📋</view>
+          <view class="mode-name">简洁模式</view>
+          <view class="mode-desc">只保留核心成长追踪，简单直接</view>
+          <view class="mode-features">
+            <view class="mode-feature">✓ 属性追踪</view>
+            <view class="mode-feature">✓ 任务管理</view>
+            <view class="mode-feature">✓ 数据统计</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="btn-row">
+      <button class="btn-outline" bindtap="prevStep">← 上一步</button>
+      <button class="btn-primary" bindtap="nextStep">下一步 →</button>
+    </view>
+  </view>
+
+  <!-- 步骤3：属性设置 -->
+  <view class="step-section" wx:if="{{currentStep === 3}}">
+    <view class="card" id="guide-step3">
+      <view class="card-title">🎯 第 3 步：设定追踪属性</view>
+      <view class="hint">输入你想要追踪的属性名、初始数值和分组。数值越高，等级越高。</view>
+
+      <!-- 预设模板 -->
+      <view class="templates">
+        <view class="tpl-btn" bindtap="loadPreset" data-key="student">📚 学生模板</view>
+        <view class="tpl-btn" bindtap="loadPreset" data-key="fitness">💪 健身模板</view>
+        <view class="tpl-btn" bindtap="loadPreset" data-key="coder">💻 程序员模板</view>
+        <view class="tpl-btn" bindtap="loadPreset" data-key="empty">🗑 清空</view>
+      </view>
+    </view>
+
+    <!-- 属性列表 -->
+    <view class="card" id="guide-step4" wx:if="{{attrs.length > 0}}">
+      <view class="card-title">📊 已设属性</view>
+      <view class="attr-row" wx:for="{{attrs}}" wx:key="index">
+        <input class="form-input flex2" placeholder="属性名" value="{{item.name}}" bindinput="onAttrName" data-index="{{index}}" />
+        <input class="form-input attr-value-input" type="number" placeholder="数值" value="{{item.value}}" bindinput="onAttrValue" data-index="{{index}}" />
+        <picker class="form-input flex1" range="{{grpOptions}}" value="{{item.grpIndex}}" bindchange="onAttrGrp" data-index="{{index}}">
+          <view class="picker-text">{{grpOptions[item.grpIndex]}}</view>
+        </picker>
+        <view class="btn-remove" bindtap="removeAttr" data-index="{{index}}">✕</view>
+      </view>
+
+      <button class="btn-outline btn-sm" bindtap="addAttr">+ 添加属性</button>
+    </view>
+
+    <view class="btn-row">
+      <button class="btn-outline" bindtap="prevStep">← 上一步</button>
+      <button class="btn-primary" bindtap="nextStep">下一步 →</button>
+    </view>
+  </view>
+
+  <!-- 步骤4：任务设置 -->
+  <view class="step-section" wx:if="{{currentStep === 4}}">
+    <view class="card" id="guide-step5">
+      <view class="card-title">📋 第 4 步：设定任务</view>
+      <view class="hint">任务分四种：每日（每天重置）、特殊（一次性）、应急（突发临时）、阶段（长期目标）。奖励格式：属性名+数值，多个用中文逗号"，"或英文逗号","分隔。</view>
+
+      <!-- 预设模板 -->
+      <view class="templates">
+        <view class="tpl-btn" bindtap="loadTaskPreset" data-key="student">📚 学生任务</view>
+        <view class="tpl-btn" bindtap="loadTaskPreset" data-key="fitness">💪 健身任务</view>
+        <view class="tpl-btn" bindtap="loadTaskPreset" data-key="coder">💻 编程任务</view>
+        <view class="tpl-btn" bindtap="loadTaskPreset" data-key="empty">🗑 清空</view>
+      </view>
+    </view>
+
+    <!-- 任务列表 -->
+    <view class="card" id="guide-step6" wx:if="{{taskList.length > 0}}">
+      <view class="card-title">📝 已设任务</view>
+      <view class="task-row" wx:for="{{taskList}}" wx:key="index">
+        <input class="form-input flex2" placeholder="任务名" value="{{item.name}}" bindinput="onTaskName" data-index="{{index}}" />
+        <picker class="form-input flex1" range="{{typeOptions}}" value="{{item.typeIndex}}" bindchange="onTaskType" data-index="{{index}}">
+          <view class="picker-text">{{typeOptions[item.typeIndex]}}</view>
+        </picker>
+        <input class="form-input flex3" placeholder="奖励: 体质+5，耐力+3" value="{{item.rewardsStr}}" bindinput="onTaskRewards" data-index="{{index}}" />
+        <input class="form-input flex2" placeholder="描述（可选）" value="{{item.desc}}" bindinput="onTaskDesc" data-index="{{index}}" />
+        <view class="btn-remove" bindtap="removeTask" data-index="{{index}}">✕</view>
+      </view>
+
+      <button class="btn-outline btn-sm" bindtap="addTask">+ 添加任务</button>
+    </view>
+
+    <view class="btn-row">
+      <button class="btn-outline" bindtap="prevStep">← 上一步</button>
+      <button class="btn-primary" bindtap="nextStep">下一步 →</button>
+    </view>
+  </view>
+
+  <!-- 步骤5：确认提交 -->
+  <view class="step-section" wx:if="{{currentStep === 5}}">
+    <view class="card" id="guide-step7" style="text-align:center">
+      <view class="card-title">✅ 第 5 步：确认并开始</view>
+      <view class="summary">
+        👤 <text class="bold">{{playerName}}</text> ｜ 🎮 <text class="bold">{{selectedMode === 'cultivation' ? '修仙模式' : '简洁模式'}}</text> ｜ 📊 <text class="bold">{{attrs.length}}</text> 项属性 ｜ 📋 <text class="bold">{{taskList.length}}</text> 条任务
+      </view>
+      <button class="btn-primary btn-large" bindtap="submitSetup" loading="{{submitting}}">
+        🚀 开始我的成长之路！
+      </button>
+    </view>
+    <view class="btn-row">
+      <button class="btn-outline" bindtap="prevStep">← 上一步</button>
+    </view>
+  </view>
+
+</view>

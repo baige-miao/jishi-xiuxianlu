@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/welcome/welcome",
+    "pages/index/index",
+    "pages/setup/setup",
+    "pages/growth/growth",
+    "pages/leisure/leisure",
+    "pages/settings/settings",
+    "pages/logs/logs",
+    "pages/stats/stats",
+    "pages/liuren/liuren",
+    "pages/memos/memos",
+    "pages/help/help",
+    "pages/tarot/tarot",
+    "pages/bazi/bazi"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#0a0a14",
+    "navigationBarTitleText": "记事修仙录",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#0a0a14",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#888888",
+    "selectedColor": "#00d4aa",
+    "backgroundColor": "#141428",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "面板"
+      },
+      {
+        "pagePath": "pages/growth/growth",
+        "text": "生活"
+      },
+      {
+        "pagePath": "pages/leisure/leisure",
+        "text": "休闲"
+      },
+      {
+        "pagePath": "pages/settings/settings",
+        "text": "设置"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "cloud": true,
+  "lazyCodeLoading": "requiredComponents"
+}

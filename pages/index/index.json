@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "记事修仙录",
+  "navigationBarBackgroundColor": "#0a0a14",
+  "usingComponents": {
+    "task-item": "/components/task-item/task-item"
+  }
+}
