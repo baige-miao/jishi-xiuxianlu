@@ -35,7 +35,7 @@
     "swc": false,
     "disableSWC": true
   },
-  "appid": "wx40b01a2eb71ae85b",
+  "appid": "your-appid",
   "projectname": "life-rpg-miniapp",
   "libVersion": "2.25.4",
   "condition": {},
