@@ -10,6 +10,7 @@ const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 const _ = db.command;
+const MIND_ATTRS = ['精神', '心情', '意志力', '专注力', '精力'];
 
 exports.main = async (event, context) => {
   const { player_name, player_age, gender, birth_year, birth_month, birth_day, birth_hour, bazi, cultivation_enabled, attrs, tasks } = event;
@@ -35,6 +36,9 @@ exports.main = async (event, context) => {
     if (value < 0) {
       negativeWarnings.push(attr.name);
       value = 0;
+    }
+    if (MIND_ATTRS.includes(attr.name) && value > 100) {
+      value = 100;
     }
     return {
       name: attr.name,

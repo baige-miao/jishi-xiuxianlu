@@ -85,12 +85,16 @@ exports.main = async (event, context) => {
         attr.lastImproveDate = today; // 重置衰减计数
       }
 
-      return {
+      const result = {
         name: attr.name,
         value: attr.value,
         grp: attr.grp,
         level: getLevel(attr.name, attr.value),
       };
+      if (attr.lastImproveDate) {
+        result.lastImproveDate = attr.lastImproveDate;
+      }
+      return result;
     });
 
     // 如果发生了衰减，回写数据库

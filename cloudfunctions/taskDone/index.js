@@ -8,7 +8,7 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 const _ = db.command;
 
-const { getLevel } = require('./levels');
+const { getLevel, MIND_ATTRS } = require('./levels');
 
 exports.main = async (event, context) => {
   const openid = cloud.getWXContext().OPENID;
@@ -51,7 +51,8 @@ exports.main = async (event, context) => {
     for (const [attrName, delta] of Object.entries(rewards)) {
       const attrIndex = attrs.findIndex(a => a.name === attrName);
       if (attrIndex >= 0) {
-        const newVal = Math.max(0, attrs[attrIndex].value + delta);
+        const maxVal = MIND_ATTRS.includes(attrName) ? 100 : Infinity;
+        const newVal = Math.min(maxVal, Math.max(0, attrs[attrIndex].value + delta));
         attrs[attrIndex].value = newVal;
         // 更新最后提升日期（如果属性增加了）
         if (delta > 0) {

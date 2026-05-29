@@ -5,6 +5,7 @@
 const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
+const MIND_ATTRS = ['精神', '心情', '意志力', '专注力', '精力'];
 
 exports.main = async (event, context) => {
   const openid = cloud.getWXContext().OPENID;
@@ -13,9 +14,12 @@ exports.main = async (event, context) => {
   if (!name || !name.trim()) {
     return { ok: false, message: '属性名不能为空' };
   }
-  const newValue = parseInt(value);
+  let newValue = parseInt(value);
   if (isNaN(newValue) || newValue < 0) {
     return { ok: false, message: '属性值不能为负数' };
+  }
+  if (MIND_ATTRS.includes(name.trim()) && newValue > 100) {
+    newValue = 100;
   }
 
   try {
