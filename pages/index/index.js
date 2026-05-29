@@ -986,7 +986,7 @@ Page({
   // 授权推送通知（必须由用户直接 tap 触发）
   authorizeReminder() {
     wx.requestSubscribeMessage({
-      tmplIds: ['PysPbrZESgPoWLcrcdqb23o7wiQyrTCuqo6RRbHbV1Y'],
+      tmplIds: ['your-template-id'], // 替换为你的订阅消息模板ID
       success: (res) => {
         console.log('订阅消息授权结果：', JSON.stringify(res));
         wx.showToast({ title: '已开启推送通知', icon: 'none', duration: 2000 });

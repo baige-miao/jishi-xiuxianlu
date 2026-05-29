@@ -7,7 +7,7 @@ const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 
-const TEMPLATE_ID = 'PysPbrZESgPoWLcrcdqb23o7wiQyrTCuqo6RRbHbV1Y';
+const TEMPLATE_ID = 'your-template-id'; // 替换为你的订阅消息模板ID
 
 exports.main = async (event, context) => {
   const now = new Date();
