@@ -1,0 +1,36 @@
+<!--
+  任务条目组件
+  属性：task（任务数据）、showActions（是否显示操作按钮）
+  事件：dotask（完成）、delete（删除）、togglesubtask（子任务切换）
+-->
+<view class="task-item {{task.status === '已完成' ? 'done' : ''}} {{extraClass || ''}}">
+  <!-- 状态图标 -->
+  <view class="task-status {{task.status === '已完成' ? 'status-done' : 'status-undone'}}">
+    {{task.status === '已完成' ? '✓' : ''}}
+  </view>
+  <!-- 任务名 -->
+  <view class="task-name {{task.status === '已完成' ? 'task-done-text' : ''}}" bindtap="onShowDetail">{{task.name}}</view>
+  <!-- 奖励 -->
+  <view class="task-rewards">{{task.rewardsStr}}</view>
+  <!-- 操作按钮（可控制是否显示） -->
+  <block wx:if="{{showActions}}">
+    <button class="btn-do" disabled="{{task.status === '已完成'}}" bindtap="onDoTask">
+      {{task.status === '已完成' ? '已完成' : '完成'}}
+    </button>
+    <view class="btn-delete" bindtap="onDeleteTask">✕</view>
+  </block>
+  <!-- 已达成标记（用于已完成阶段任务） -->
+  <text wx:if="{{showBadge}}" class="phase-badge">🏆 已达成</text>
+</view>
+<!-- 子任务列表（阶段任务） -->
+<view wx:if="{{task.subtasks && task.subtasks.length > 0}}" class="subtask-section">
+  <view class="subtask-progress-bar">
+    <view class="subtask-progress-fill" style="width: {{subtaskPct}}%"></view>
+  </view>
+  <view class="subtask-list">
+    <view wx:for="{{task.subtasks}}" wx:key="index" class="subtask-item {{item.done ? 'subtask-done' : ''}}" bindtap="onToggleSubtask" data-index="{{index}}">
+      <view class="subtask-check">{{item.done ? '☑' : '☐'}}</view>
+      <view class="subtask-name">{{item.name}}</view>
+    </view>
+  </view>
+</view>

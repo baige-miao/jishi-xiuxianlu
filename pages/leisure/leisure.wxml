@@ -1,0 +1,36 @@
+<!--
+  休闲页面
+  功能：卡片式入口布局，一个功能入口：小六壬文化趣玩
+-->
+<view class="container {{themeClass}}">
+
+  <!-- 审核模式：显示占位提示 -->
+  <view wx:if="{{reviewMode}}" class="review-placeholder">
+    <view class="review-icon">🚧</view>
+    <view class="review-text">功能建设中，敬请期待</view>
+  </view>
+
+  <!-- 正常模式：显示功能卡片 -->
+  <block wx:else>
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="page-title">🎮 休闲娱乐</view>
+    <view class="page-subtitle">放松心情，探索未知</view>
+  </view>
+
+  <!-- 功能入口卡片 -->
+  <view class="feature-grid">
+    <!-- 数算工具入口 -->
+    <view class="feature-card" bindtap="goLiuren">
+      <view class="feature-icon">🔢</view>
+      <view class="feature-content">
+        <view class="feature-name">数算工具</view>
+        <view class="feature-desc">根据日期和时辰生成数字，可自行记录查阅</view>
+      </view>
+      <view class="feature-arrow">→</view>
+    </view>
+
+  </view>
+  </block>
+
+</view>

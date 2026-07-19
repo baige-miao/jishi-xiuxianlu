@@ -1,0 +1,157 @@
+/**
+ * 任务条目组件样式
+ */
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 16rpx 18rpx;
+  background: var(--card-bg);
+  border: 1rpx solid var(--border);
+  border-radius: 12rpx;
+}
+
+.task-status {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  flex-shrink: 0;
+}
+
+.status-done {
+  background: var(--success);
+  color: var(--btn-text);
+}
+
+.status-undone {
+  border: 2rpx solid var(--dim);
+  color: transparent;
+}
+
+.task-name {
+  flex: 1;
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.task-done-text {
+  text-decoration: line-through;
+  color: var(--dim);
+}
+
+.task-rewards {
+  font-size: 20rpx;
+  color: var(--dim);
+  max-width: 200rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 完成按钮 */
+.btn-do {
+  padding: 8rpx 20rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-size: 22rpx;
+  font-weight: 600;
+  flex-shrink: 0;
+  line-height: 1.5;
+}
+
+.btn-do[disabled] {
+  border-color: var(--dim);
+  color: var(--dim);
+}
+
+/* 删除按钮 */
+.btn-delete {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--danger);
+  font-size: 28rpx;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* 已完成阶段任务特殊样式 */
+.completed-phase {
+  border-color: var(--gold-alpha-border);
+  background: var(--gold-alpha-bg);
+}
+
+.phase-badge {
+  font-size: 20rpx;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+/* 子任务 */
+.subtask-section {
+  padding: 0 18rpx 14rpx;
+  background: var(--card-bg);
+  border: 1rpx solid var(--border);
+  border-top: none;
+  border-radius: 0 0 12rpx 12rpx;
+  margin-top: -12rpx;
+}
+
+.subtask-progress-bar {
+  height: 6rpx;
+  background: var(--border);
+  border-radius: 3rpx;
+  overflow: hidden;
+  margin-bottom: 10rpx;
+}
+
+.subtask-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3rpx;
+  transition: width 0.3s ease;
+}
+
+.subtask-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  padding: 6rpx 0;
+}
+
+.subtask-check {
+  font-size: 28rpx;
+  color: var(--dim);
+  flex-shrink: 0;
+  width: 36rpx;
+  text-align: center;
+}
+
+.subtask-done .subtask-check {
+  color: var(--success);
+}
+
+.subtask-name {
+  font-size: 24rpx;
+  color: var(--text);
+}
+
+.subtask-done .subtask-name {
+  text-decoration: line-through;
+  color: var(--dim);
+}

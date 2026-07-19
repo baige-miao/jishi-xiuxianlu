@@ -1,0 +1,180 @@
+/**
+ * 打卡日历样式
+ */
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding: 24rpx;
+}
+
+/* 月份导航 */
+.month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40rpx;
+  padding: 20rpx 0 24rpx;
+}
+
+.nav-btn {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: var(--accent);
+  background: var(--card-bg);
+  border-radius: 50%;
+  border: 1rpx solid var(--border);
+}
+
+.nav-btn:active {
+  opacity: 0.7;
+}
+
+.month-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text);
+  min-width: 240rpx;
+  text-align: center;
+}
+
+/* 统计栏 */
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32rpx;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-num {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: var(--dim);
+  margin-top: 4rpx;
+}
+
+/* 星期标题 */
+.weekday-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 12rpx;
+}
+
+.weekday-cell {
+  text-align: center;
+  font-size: 24rpx;
+  color: var(--dim);
+  padding: 12rpx 0;
+}
+
+/* 日历网格 */
+.calendar-grid {
+  background: var(--card-bg);
+  border-radius: 20rpx;
+  border: 1rpx solid var(--border);
+  padding: 12rpx;
+  overflow: hidden;
+}
+
+.week-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4rpx;
+}
+
+.day-cell {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12rpx;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.day-cell.empty {
+  background: transparent;
+}
+
+.day-num {
+  font-size: 28rpx;
+  color: var(--text);
+  line-height: 1;
+}
+
+.day-cell.future .day-num {
+  color: var(--dim);
+  opacity: 0.5;
+}
+
+/* 今天 */
+.day-cell.today {
+  background: rgba(0, 212, 170, 0.15);
+}
+
+.day-cell.today .day-num {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* 已打卡 */
+.day-cell.checked {
+  background: rgba(0, 212, 170, 0.2);
+}
+
+.day-cell.checked .day-num {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.check-dot {
+  font-size: 18rpx;
+  color: var(--accent);
+  margin-top: 2rpx;
+  line-height: 1;
+}
+
+/* 图例 */
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 40rpx;
+  margin-top: 32rpx;
+  padding: 16rpx 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  font-size: 22rpx;
+  color: var(--dim);
+}
+
+.legend-dot {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.legend-dot.checked {
+  background: var(--accent);
+}
+
+.legend-dot.today {
+  background: rgba(0, 212, 170, 0.4);
+  border: 2rpx solid var(--accent);
+}

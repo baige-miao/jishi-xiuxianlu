@@ -1,0 +1,122 @@
+/**
+ * 休闲页面样式
+ * 卡片式入口布局
+ */
+
+.container {
+  padding: 24rpx;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* 页面头部 */
+.page-header {
+  text-align: center;
+  margin-bottom: 48rpx;
+  padding: 40rpx 0;
+}
+
+.page-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 12rpx;
+}
+
+.page-subtitle {
+  font-size: 26rpx;
+  color: var(--dim);
+}
+
+/* 功能入口网格 */
+.feature-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+/* 功能卡片 */
+.feature-card {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 32rpx;
+  background: var(--card-bg);
+  border: 1rpx solid var(--border);
+  border-radius: 20rpx;
+  transition: all 0.3s ease;
+}
+
+.feature-card:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+/* 功能图标 */
+.feature-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 24rpx;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  flex-shrink: 0;
+}
+
+/* 功能内容 */
+.feature-content {
+  flex: 1;
+}
+
+.feature-name {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8rpx;
+}
+
+.feature-desc {
+  font-size: 24rpx;
+  color: var(--dim);
+  line-height: 1.5;
+}
+
+/* 箭头 */
+.feature-arrow {
+  font-size: 32rpx;
+  color: var(--dim);
+  flex-shrink: 0;
+}
+
+/* 底部提示 */
+.footer-hint {
+  text-align: center;
+  margin-top: 60rpx;
+  padding: 20rpx;
+}
+
+.footer-hint text {
+  font-size: 24rpx;
+  color: var(--dim);
+}
+
+/* 审核模式占位 */
+.review-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 24rpx;
+}
+
+.review-icon {
+  font-size: 80rpx;
+}
+
+.review-text {
+  font-size: 30rpx;
+  color: var(--dim);
+}

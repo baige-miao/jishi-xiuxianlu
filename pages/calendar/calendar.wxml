@@ -1,0 +1,52 @@
+<!--
+  打卡日历页面
+-->
+<view class="page {{themeClass}}">
+
+  <!-- 月份导航 -->
+  <view class="month-nav">
+    <view class="nav-btn" bindtap="prevMonth">◀</view>
+    <view class="month-title" bindtap="goToday">{{monthLabel}}</view>
+    <view class="nav-btn" bindtap="nextMonth">▶</view>
+  </view>
+
+  <!-- 打卡统计 -->
+  <view class="stats-bar">
+    <view class="stat-item">
+      <view class="stat-num">{{totalCheckins}}</view>
+      <view class="stat-label">本月打卡</view>
+    </view>
+  </view>
+
+  <!-- 星期标题 -->
+  <view class="weekday-row">
+    <view class="weekday-cell" wx:for="{{weekDays}}" wx:key="*this">{{item}}</view>
+  </view>
+
+  <!-- 日历网格 -->
+  <view class="calendar-grid">
+    <view class="week-row" wx:for="{{weeks}}" wx:key="index" wx:for-item="week">
+      <view
+        class="day-cell {{item.empty ? 'empty' : ''}} {{item.isToday ? 'today' : ''}} {{checkinDates[item.dateStr] ? 'checked' : ''}} {{item.isFuture ? 'future' : ''}}"
+        wx:for="{{week}}"
+        wx:key="day"
+      >
+        <view wx:if="{{!item.empty}}" class="day-num">{{item.day}}</view>
+        <view wx:if="{{checkinDates[item.dateStr]}}" class="check-dot">✓</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 图例 -->
+  <view class="legend">
+    <view class="legend-item">
+      <view class="legend-dot checked"></view>
+      <text>已打卡</text>
+    </view>
+    <view class="legend-item">
+      <view class="legend-dot today"></view>
+      <text>今天</text>
+    </view>
+  </view>
+
+</view>

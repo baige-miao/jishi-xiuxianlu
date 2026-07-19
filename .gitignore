@@ -1,0 +1,37 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Node / Cloud functions
+node_modules/
+package-lock.json
+miniprogram_npm/
+
+# WeChat DevTools
+project.private.config.json
+
+# Environment / secrets
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Debug / test / local scripts
+test_bazi.py
+test_month.js
+crawl_check.py
+crawl_debug.py
+crawl_debug2.py
+crawl_final.py
+crawl_improved.py
+crawl_selenium.py
+generate_wannianli.py
+get-pip.py
+sync-levels.js
+
+# Logs
+*.log

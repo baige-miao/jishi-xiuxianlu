@@ -1,0 +1,90 @@
+<!--
+  备忘录页面
+  列表模式 + 全屏编辑器
+-->
+<view class="page {{themeClass}}">
+
+  <!-- ===== 列表模式 ===== -->
+  <block wx:if="{{!editing}}">
+    <view class="list-header">
+      <view class="page-title">📝 备忘录</view>
+      <button class="btn-add" bindtap="addMemo">+ 新建</button>
+    </view>
+
+    <!-- 标签筛选 -->
+    <scroll-view class="tag-filter" scroll-x>
+      <view class="tag-pill {{activeTag === '全部' ? 'active' : ''}}" bindtap="switchTag" data-tag="全部">全部</view>
+      <view wx:for="{{tagOptions}}" wx:key="*this" class="tag-pill {{activeTag === item ? 'active' : ''}}" bindtap="switchTag" data-tag="{{item}}">{{item}}</view>
+    </scroll-view>
+
+    <!-- 加载中 -->
+    <view class="loading" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 备忘录列表 -->
+    <view class="memo-list" wx:if="{{!loading && memos.length > 0}}">
+      <view class="memo-card-wrap" wx:for="{{memos}}" wx:key="_id">
+        <view class="memo-card {{swipedId === item._id ? 'swiped' : ''}}"
+              bindtap="editMemo"
+              data-id="{{item._id}}"
+              bindtouchstart="onTouchStart"
+              bindtouchend="onTouchEnd">
+          <view class="memo-card-top">
+            <view class="memo-title">{{item.title || '无标题'}}</view>
+            <view wx:if="{{item.tag}}" class="memo-tag-dot" style="background: {{tagColors[item.tag] || 'var(--dim)'}}"></view>
+          </view>
+          <view class="memo-preview">{{item.preview || '暂无内容'}}</view>
+          <view class="memo-time">{{item.timeStr}}</view>
+        </view>
+        <view class="memo-delete-btn {{swipedId === item._id ? 'show' : ''}}"
+              bindtap="deleteMemo"
+              data-id="{{item._id}}">
+          删除
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-hint" wx:if="{{!loading && memos.length === 0}}">
+      <text>{{activeTag === '全部' ? '暂无备忘录，点击"+ 新建"开始记录' : '该标签下暂无备忘录'}}</text>
+    </view>
+  </block>
+
+  <!-- ===== 编辑模式 ===== -->
+  <block wx:if="{{editing}}">
+    <view class="editor">
+      <!-- 顶部栏 -->
+      <view class="editor-header">
+        <button class="btn-back" bindtap="cancelEdit">← 返回</button>
+        <view class="editor-save-status">
+          <text wx:if="{{saveStatus === 'saving'}}">保存中...</text>
+          <text wx:if="{{saveStatus === 'saved'}}">已保存 ✓</text>
+        </view>
+        <button class="btn-save" bindtap="saveAndBack">完成</button>
+      </view>
+
+      <!-- 标签选择 -->
+      <scroll-view class="tag-filter editor-tags" scroll-x>
+        <view wx:for="{{tagOptions}}" wx:key="*this" class="tag-pill {{editTag === item ? 'active' : ''}}" bindtap="selectTag" data-tag="{{item}}">{{item}}</view>
+      </scroll-view>
+
+      <!-- 标题输入 -->
+      <input class="editor-title"
+             placeholder="标题"
+             value="{{editTitle}}"
+             bindinput="onTitleInput"
+             placeholder-style="color: var(--dim);" />
+
+      <!-- 内容输入 -->
+      <textarea class="editor-content"
+                placeholder="开始记录..."
+                value="{{editContent}}"
+                bindinput="onContentInput"
+                placeholder-style="color: var(--dim);"
+                auto-height="{{false}}"
+                maxlength="-1" />
+    </view>
+  </block>
+
+</view>

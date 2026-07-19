@@ -1,0 +1,93 @@
+<!--
+  数算工具页面
+  输入公历日期和时辰，生成三个数字（1-6），供用户自行记录查阅
+-->
+<view class="page {{themeClass}}">
+  <view class="page-title">🔢 数算工具</view>
+  <view class="page-subtitle">根据日期和时辰生成数字，可自行记录查阅</view>
+
+  <!-- 选择区 -->
+  <view class="picker-section">
+    <view class="picker-row">
+      <view class="picker-item">
+        <text class="picker-label">年份</text>
+        <picker mode="selector" range="{{years}}" value="{{selectedYear}}" bindchange="onYearChange">
+          <view class="picker-value">{{years[selectedYear]}} 年</view>
+        </picker>
+      </view>
+      <view class="picker-item">
+        <text class="picker-label">月份</text>
+        <picker mode="selector" range="{{months}}" value="{{selectedMonth}}" bindchange="onMonthChange">
+          <view class="picker-value">{{months[selectedMonth]}} 月</view>
+        </picker>
+      </view>
+      <view class="picker-item">
+        <text class="picker-label">日期</text>
+        <picker mode="selector" range="{{days}}" value="{{selectedDay}}" bindchange="onDayChange">
+          <view class="picker-value">{{days[selectedDay]}} 日</view>
+        </picker>
+      </view>
+    </view>
+    <view class="picker-row">
+      <view class="picker-item" style="flex: 3;">
+        <text class="picker-label">时辰</text>
+        <picker mode="selector" range="{{hourOptions}}" value="{{selectedHour}}" bindchange="onHourChange">
+          <view class="picker-value">{{hourOptions[selectedHour]}}</view>
+        </picker>
+      </view>
+    </view>
+    <!-- 农历信息 -->
+    <view class="lunar-info" wx:if="{{lunarInfo}}">
+      <text class="lunar-text">农历：{{lunarInfo.ganZhi}}（{{lunarInfo.animal}}年）{{lunarInfo.monthName}}{{lunarInfo.dayName}}</text>
+    </view>
+    <button class="btn-divine" bindtap="doGenerate">生成数字</button>
+  </view>
+
+  <!-- 结果区 -->
+  <block wx:if="{{result}}">
+
+    <!-- 三个数字 -->
+    <view class="section">
+      <view class="section-title">📋 生成结果</view>
+      <view class="number-cards">
+        <view class="number-card">
+          <view class="number-tag">月数</view>
+          <view class="number-value">{{result.monthNum}}</view>
+        </view>
+        <view class="number-card">
+          <view class="number-tag">日数</view>
+          <view class="number-value">{{result.dayNum}}</view>
+        </view>
+        <view class="number-card">
+          <view class="number-tag">时数</view>
+          <view class="number-value">{{result.timeNum}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 说明 -->
+    <view class="section">
+      <view class="section-title">📖 使用说明</view>
+      <view class="summary-box">
+        <text class="summary-text">
+          已根据所选日期和时辰生成三个数字（范围 1-6）。
+        </text>
+        <text class="summary-text">
+          月数：{{result.monthNum}}　日数：{{result.dayNum}}　时数：{{result.timeNum}}
+        </text>
+        <text class="summary-text">
+          可记录上述数字，自行查阅相关传统文化资料。
+        </text>
+      </view>
+    </view>
+
+    <!-- 免责声明 -->
+    <view class="disclaimer">本工具仅生成数字，不提供任何解读或建议</view>
+
+  </block>
+
+  <!-- 未生成提示 -->
+  <view class="empty-hint" wx:if="{{!result}}">
+    <text>选择日期和时辰后点击"生成数字"</text>
+  </view>
+</view>

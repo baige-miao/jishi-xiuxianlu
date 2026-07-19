@@ -1,0 +1,114 @@
+<!--
+  设置页面
+  功能：列表式布局，包含主题切换、修仙模式开关、重新设置、说明页入口
+
+  更新说明：
+  - 列表式布局展示设置项
+  - 主题切换：点击弹出选择器
+  - 修仙模式开关：切换开关
+  - 重新设置：二次确认+红色警示
+  - 说明页入口：跳转到帮助页面
+-->
+<view class="container {{themeClass}}">
+
+  <!-- 设置列表 -->
+  <view class="settings-group">
+    <view class="settings-group-title">外观设置</view>
+
+    <!-- 主题切换 -->
+    <view class="settings-item" bindtap="showThemePicker">
+      <view class="settings-item-left">
+        <view class="settings-icon">🎨</view>
+        <view class="settings-label">主题切换</view>
+      </view>
+      <view class="settings-item-right">
+        <text class="settings-value">{{currentThemeName}}</text>
+        <text class="settings-arrow">→</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="settings-group">
+    <view class="settings-group-title">功能设置</view>
+
+    <!-- 修仙模式开关 -->
+    <view class="settings-item">
+      <view class="settings-item-left">
+        <view class="settings-icon">⚡</view>
+        <view class="settings-label">修仙模式</view>
+      </view>
+      <view class="settings-item-right">
+        <switch checked="{{cultivationEnabled}}" bindchange="toggleCultivation" color="#00d4aa" />
+      </view>
+    </view>
+  </view>
+
+  <view class="settings-group">
+    <view class="settings-group-title">帮助与支持</view>
+
+    <!-- 说明页入口 -->
+    <view class="settings-item" bindtap="goHelp">
+      <view class="settings-item-left">
+        <view class="settings-icon">📖</view>
+        <view class="settings-label">使用说明</view>
+      </view>
+      <view class="settings-item-right">
+        <text class="settings-arrow">→</text>
+      </view>
+    </view>
+
+    <!-- 意见反馈 -->
+    <view class="settings-item" bindtap="showFeedback">
+      <view class="settings-item-left">
+        <view class="settings-icon">💬</view>
+        <view class="settings-label">意见反馈</view>
+      </view>
+      <view class="settings-item-right">
+        <text class="settings-arrow">→</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 反馈弹窗 -->
+  <view class="feedback-mask" wx:if="{{showFeedbackModal}}" bindtap="hideFeedback">
+    <view class="feedback-modal" catchtap>
+      <view class="feedback-title">意见反馈</view>
+      <textarea class="feedback-textarea"
+                placeholder="请描述你遇到的问题或建议..."
+                value="{{feedbackContent}}"
+                bindinput="onFeedbackInput"
+                maxlength="500"
+                auto-height="{{false}}" />
+      <input class="feedback-contact"
+             placeholder="联系方式（选填）"
+             value="{{feedbackContact}}"
+             bindinput="onContactInput" />
+      <view class="feedback-footer">
+        <button class="feedback-btn feedback-cancel" bindtap="hideFeedback">取消</button>
+        <button class="feedback-btn feedback-submit" bindtap="submitFeedback"
+                loading="{{feedbackSubmitting}}" disabled="{{feedbackSubmitting}}">提交</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="settings-group">
+    <view class="settings-group-title">数据管理</view>
+
+    <!-- 重新设置 -->
+    <view class="settings-item settings-item-danger" bindtap="confirmReset">
+      <view class="settings-item-left">
+        <view class="settings-icon">🔄</view>
+        <view class="settings-label">重新设置</view>
+      </view>
+      <view class="settings-item-right">
+        <text class="settings-arrow">→</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部版本信息 -->
+  <view class="footer">
+    <text class="footer-text">记事修仙录 v1.0</text>
+  </view>
+
+</view>

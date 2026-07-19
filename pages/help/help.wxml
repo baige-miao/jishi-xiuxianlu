@@ -1,0 +1,542 @@
+<!--
+  帮助说明页面
+  功能：详细介绍应用的各项功能和使用方法
+  包含6个标签页：快速入门、属性系统、任务系统、修仙系统、其他功能、常见问题
+-->
+<view class="help-container {{themeClass}}">
+  <!-- 顶部标签页导航 -->
+  <scroll-view class="tabs-scroll" scroll-x enable-flex>
+    <view class="tabs">
+      <view
+        class="tab {{activeTab === 0 ? 'active' : ''}}"
+        bindtap="switchTab"
+        data-index="0"
+      >
+        <text class="tab-icon">📖</text>
+        <text class="tab-text">快速入门</text>
+      </view>
+      <view
+        class="tab {{activeTab === 1 ? 'active' : ''}}"
+        bindtap="switchTab"
+        data-index="1"
+      >
+        <text class="tab-icon">💪</text>
+        <text class="tab-text">属性系统</text>
+      </view>
+      <view
+        class="tab {{activeTab === 2 ? 'active' : ''}}"
+        bindtap="switchTab"
+        data-index="2"
+      >
+        <text class="tab-icon">📋</text>
+        <text class="tab-text">任务系统</text>
+      </view>
+      <view
+        class="tab {{activeTab === 3 ? 'active' : ''}}"
+        bindtap="switchTab"
+        data-index="3"
+      >
+        <text class="tab-icon">⚡</text>
+        <text class="tab-text">修仙系统</text>
+      </view>
+      <view
+        class="tab {{activeTab === 4 ? 'active' : ''}}"
+        bindtap="switchTab"
+        data-index="4"
+      >
+        <text class="tab-icon">🔮</text>
+        <text class="tab-text">其他功能</text>
+      </view>
+      <view
+        class="tab {{activeTab === 5 ? 'active' : ''}}"
+        bindtap="switchTab"
+        data-index="5"
+      >
+        <text class="tab-icon">❓</text>
+        <text class="tab-text">常见问题</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 标签页内容 -->
+  <scroll-view class="content-scroll" scroll-y>
+
+    <!-- 快速入门 -->
+    <view class="tab-content" wx:if="{{activeTab === 0}}">
+      <!-- 简介 -->
+      <view class="section">
+        <view class="section-title">📌 简介</view>
+        <view class="section-body">
+          <text class="text">记事修仙录是一款游戏化的个人成长追踪工具。通过完成日常任务来提升属性值、获得灵力、突破修仙境界，让自我提升变得有趣。</text>
+        </view>
+      </view>
+
+      <!-- 核心概念 -->
+      <view class="section">
+        <view class="section-title">🎯 核心概念</view>
+        <view class="section-body">
+          <view class="concept-item">
+            <text class="concept-name highlight">属性</text>
+            <text class="concept-desc">你想要提升的方面，如体质、学识、意志力等。每个属性有对应的等级称号。</text>
+          </view>
+          <view class="concept-item">
+            <text class="concept-name highlight">任务</text>
+            <text class="concept-desc">你需要完成的事项。完成任务可获得属性提升和灵力奖励。</text>
+          </view>
+          <view class="concept-item">
+            <text class="concept-name highlight">修仙</text>
+            <text class="concept-desc">代表你的整体成长境界。通过积累灵力可以突破到更高境界。</text>
+          </view>
+          <view class="concept-item">
+            <text class="concept-name highlight">灵力</text>
+            <text class="concept-desc">完成任务获得的能量，用于修仙突破。不同任务类型提供不同灵力。</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 日常使用流程 -->
+      <view class="section">
+        <view class="section-title">🔄 日常使用流程</view>
+        <view class="section-body">
+          <view class="flow-item">
+            <view class="flow-step">1</view>
+            <view class="flow-content">
+              <text class="flow-title">每天打开应用</text>
+              <text class="flow-desc">系统会自动重置每日任务状态</text>
+            </view>
+          </view>
+          <view class="flow-item">
+            <view class="flow-step">2</view>
+            <view class="flow-content">
+              <text class="flow-title">查看今日任务</text>
+              <text class="flow-desc">在主面板查看需要完成的每日任务</text>
+            </view>
+          </view>
+          <view class="flow-item">
+            <view class="flow-step">3</view>
+            <view class="flow-content">
+              <text class="flow-title">完成任务</text>
+              <text class="flow-desc">点击完成按钮，获得属性提升和灵力</text>
+            </view>
+          </view>
+          <view class="flow-item">
+            <view class="flow-step">4</view>
+            <view class="flow-content">
+              <text class="flow-title">积累灵力突破</text>
+              <text class="flow-desc">灵力足够时可突破修仙境界</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 属性系统 -->
+    <view class="tab-content" wx:if="{{activeTab === 1}}">
+      <!-- 属性定义 -->
+      <view class="section">
+        <view class="section-title">📊 属性定义</view>
+        <view class="section-body">
+          <text class="text">属性代表你想要提升的各个方面。系统预设了几个常用属性模板（学生/健身/程序员），你也可以自定义属性。</text>
+          <view class="info-box">
+            <text class="info-text">常用属性：体质、精神、意志力、心情、学识、编程等</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 提升方式 -->
+      <view class="section">
+        <view class="section-title">⬆️ 提升方式</view>
+        <view class="section-body">
+          <text class="text">完成任务时，任务关联的属性会自动提升。每个任务可以设置多个属性奖励。</text>
+          <view class="example-box">
+            <text class="example-title">示例任务奖励：</text>
+            <text class="example-text">"晨跑" → 体质+5，耐力+3</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 衰减机制 -->
+      <view class="section">
+        <view class="section-title">📉 衰减机制</view>
+        <view class="section-body">
+          <text class="text">如果某个属性连续7天没有提升，将开始衰减。每天衰减当前值的5%，最低不低于1。</text>
+          <view class="warning-box">
+            <text class="warning-text">提示：定期完成相关任务可避免属性衰减</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 等级说明 -->
+      <view class="section">
+        <view class="section-title">🏆 等级说明</view>
+        <view class="section-body">
+          <text class="text">每个属性根据数值有不同的等级称号：</text>
+          <view class="level-list">
+            <view class="level-item">
+              <text class="level-range">0-10</text>
+              <text class="level-label">毫无建树</text>
+            </view>
+            <view class="level-item">
+              <text class="level-range">11-20</text>
+              <text class="level-label">初窥门径</text>
+            </view>
+            <view class="level-item">
+              <text class="level-range">21-30</text>
+              <text class="level-label">渐入佳境</text>
+            </view>
+            <view class="level-item">
+              <text class="level-range">31-50</text>
+              <text class="level-label">略有小成</text>
+            </view>
+            <view class="level-item">
+              <text class="level-range">51-100</text>
+              <text class="level-label">登堂入室</text>
+            </view>
+            <view class="level-item">
+              <text class="level-range">101+</text>
+              <text class="level-label">更高境界...</text>
+            </view>
+          </view>
+          <text class="text hint">部分属性（如体质、学识、心境）有专属等级表，详情可点击主页面的评级查看。</text>
+        </view>
+      </view>
+
+      <!-- 评级机制 -->
+      <view class="section">
+        <view class="section-title">🎖️ 评级机制</view>
+        <view class="section-body">
+          <text class="text">评级反映你的综合实力深度，而非简单的属性总和。计算公式为：</text>
+          <view class="info-box">
+            <text class="info-text">得分 = 平均值 × ln(属性数量) × 2</text>
+          </view>
+          <text class="text">其中"属性数量"和"平均值"只计算非心境类属性（心境属性可手动调整，不计入评级）。</text>
+          <view class="list">
+            <view class="list-item">深度优先：把少数属性练到极致比广撒网更有效</view>
+            <view class="list-item">拓展有奖：增加新属性会提升得分，但影响随数量递减</view>
+            <view class="list-item">数量不堆分：单纯增加属性数量无法冲上高评级</view>
+          </view>
+          <view class="example-box">
+            <text class="example-title">示例：</text>
+            <text class="example-text">5个属性各100 → 得分322（新秀）</text>
+            <text class="example-text">50个属性各10 → 得分78（平民）</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 任务系统 -->
+    <view class="tab-content" wx:if="{{activeTab === 2}}">
+      <!-- 四种类型说明 -->
+      <view class="section">
+        <view class="section-title">📋 四种任务类型</view>
+        <view class="section-body">
+          <view class="type-item">
+            <view class="type-header">
+              <text class="type-icon">📋</text>
+              <text class="type-name">每日任务</text>
+              <text class="type-spirit">+10灵力</text>
+            </view>
+            <text class="type-desc">每天重复执行的任务。每天自动重置为未完成状态。</text>
+          </view>
+          <view class="type-item">
+            <view class="type-header">
+              <text class="type-icon">⚡</text>
+              <text class="type-name">特殊任务</text>
+              <text class="type-spirit">+30灵力</text>
+            </view>
+            <text class="type-desc">偶尔执行的重要任务。完成后隐藏，可手动添加新任务。</text>
+          </view>
+          <view class="type-item">
+            <view class="type-header">
+              <text class="type-icon">🚨</text>
+              <text class="type-name">应急任务</text>
+              <text class="type-spirit">+10灵力</text>
+            </view>
+            <text class="type-desc">临时紧急任务。完成后自动删除。</text>
+          </view>
+          <view class="type-item">
+            <view class="type-header">
+              <text class="type-icon">🎯</text>
+              <text class="type-name">阶段任务</text>
+              <text class="type-spirit">+500灵力</text>
+            </view>
+            <text class="type-desc">长期目标，完成后标记为"已达成"并获得大量灵力。</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 添加方式 -->
+      <view class="section">
+        <view class="section-title">➕ 添加方式</view>
+        <view class="section-body">
+          <text class="text">在主面板点击"添加任务"按钮，填写：</text>
+          <view class="list">
+            <view class="list-item">任务名称</view>
+            <view class="list-item">任务类型（每日/特殊/应急/阶段）</view>
+            <view class="list-item">奖励规则（如：体质+5，耐力+3）</view>
+            <view class="list-item">任务描述（可选）</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 完成方式 -->
+      <view class="section">
+        <view class="section-title">✅ 完成方式</view>
+        <view class="section-body">
+          <text class="text">在主面板任务列表中，点击任务右侧的完成按钮（✓）即可完成任务。</text>
+        </view>
+      </view>
+
+      <!-- 奖励机制 -->
+      <view class="section">
+        <view class="section-title">🎁 奖励机制</view>
+        <view class="section-body">
+          <text class="text">完成任务可获得：</text>
+          <view class="list">
+            <view class="list-item">属性提升（根据任务设置的奖励规则）</view>
+            <view class="list-item">灵力（根据任务类型不同）</view>
+            <view class="list-item">额外奖励：每日任务全部完成+50灵力</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 修仙系统 -->
+    <view class="tab-content" wx:if="{{activeTab === 3}}">
+      <!-- 境界说明 -->
+      <view class="section">
+        <view class="section-title">⚡ 修仙境界</view>
+        <view class="section-body">
+          <text class="text">修仙系统代表你的整体成长境界，共10个大境界，每境界9层：</text>
+          <view class="realm-list">
+            <view class="realm-item">
+              <text class="realm-name">练气</text>
+              <text class="realm-desc">入门境界</text>
+            </view>
+            <view class="realm-item">
+              <text class="realm-name">筑基</text>
+              <text class="realm-desc">打好基础</text>
+            </view>
+            <view class="realm-item">
+              <text class="realm-name">结晶</text>
+              <text class="realm-desc">灵力凝聚</text>
+            </view>
+            <view class="realm-item">
+              <text class="realm-name">金丹</text>
+              <text class="realm-desc">修为大进</text>
+            </view>
+            <view class="realm-item">
+              <text class="realm-name">具灵</text>
+              <text class="realm-desc">灵觉觉醒</text>
+            </view>
+            <view class="realm-item">
+              <text class="realm-name">元婴</text>
+              <text class="realm-desc">真正修士</text>
+            </view>
+            <view class="realm-item">
+              <text class="realm-name">化神</text>
+              <text class="realm-desc">超越极限</text>
+            </view>
+            <view class="realm-item">
+              <text class="realm-name">悟道</text>
+              <text class="realm-desc">领悟大道</text>
+            </view>
+            <view class="realm-item">
+              <text class="realm-name">羽化</text>
+              <text class="realm-desc">飞升前兆</text>
+            </view>
+            <view class="realm-item">
+              <text class="realm-name">登仙</text>
+              <text class="realm-desc">超脱凡尘</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 灵力获取 -->
+      <view class="section">
+        <view class="section-title">💫 灵力获取</view>
+        <view class="section-body">
+          <text class="text">完成任务可获得灵力：</text>
+          <view class="list">
+            <view class="list-item">每日任务：10灵力</view>
+            <view class="list-item">特殊任务：30灵力</view>
+            <view class="list-item">应急任务：10灵力</view>
+            <view class="list-item">阶段任务：500灵力</view>
+            <view class="list-item highlight-item">每日全完成额外：+50灵力</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 突破方式 -->
+      <view class="section">
+        <view class="section-title">🚀 突破方式</view>
+        <view class="section-body">
+          <text class="text">当灵力足够时，主面板会显示突破按钮。点击即可消耗灵力突破到下一层境界。</text>
+          <view class="info-box">
+            <text class="info-text">突破消耗随境界提升而增加</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 突破失败 -->
+      <view class="section">
+        <view class="section-title">💀 突破失败</view>
+        <view class="section-body">
+          <text class="text">具灵之后的大境界突破存在失败概率，失败会扣除一半灵力。每个境界可通过特定条件降低失败率：</text>
+          <view class="list">
+            <view class="list-item">具灵 → 元婴：20% 基础失败率（最高属性+连续打卡降低）</view>
+            <view class="list-item">元婴 → 化神：30%（修行天数+使用功能种类降低）</view>
+            <view class="list-item">化神 → 悟道：40%（任务完成数+属性种类降低）</view>
+            <view class="list-item">悟道 → 羽化：55%（高等级属性+体质+阶段任务降低）</view>
+            <view class="list-item">羽化 → 登仙：70%（日记篇数+心境属性降低）</view>
+          </view>
+          <text class="text hint">点击突破按钮可查看当前成功率详情和各项条件的达成情况。</text>
+          <view class="warning-box">
+            <text class="warning-text">提示：小境界突破不会失败，具灵之前的大境界突破也不会失败</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 提升效果 -->
+      <view class="section">
+        <view class="section-title">✨ 提升效果</view>
+        <view class="section-body">
+          <text class="text">突破境界会显示感悟文案，大境界突破有特别的描述。境界越高，代表你的成长越显著。</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 其他功能 -->
+    <view class="tab-content" wx:if="{{activeTab === 4}}">
+      <!-- 小六壬文化趣玩 -->
+      <view class="section">
+        <view class="section-title">🔮 小六壬文化趣玩</view>
+        <view class="section-body">
+          <text class="text">基于中国传统小六壬民俗文化的互动体验。选择日期和时辰，系统会自动转换为农历并展示宫位结果。</text>
+          <view class="list">
+            <view class="list-item">六神：大安、留连、速喜、赤口、小吉、空亡</view>
+            <view class="list-item">显示三宫结果和综合解读</view>
+          </view>
+          <text class="text" style="font-size:22rpx;opacity:0.6;margin-top:12rpx;">本功能仅供娱乐参考，不构成任何建议</text>
+        </view>
+      </view>
+
+      <!-- 备忘录 -->
+      <view class="section">
+        <view class="section-title">📝 备忘录</view>
+        <view class="section-body">
+          <text class="text">简单的笔记功能，可记录日常想法和计划。</text>
+          <view class="list">
+            <view class="list-item">支持创建、编辑、删除</view>
+            <view class="list-item">自动保存（500ms防抖）</view>
+            <view class="list-item">左滑删除</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 数据统计 -->
+      <view class="section">
+        <view class="section-title">📊 数据统计</view>
+        <view class="section-body">
+          <text class="text">查看你的成长数据和趋势。</text>
+          <view class="list">
+            <view class="list-item">本周/本月完成任务数</view>
+            <view class="list-item">最常完成任务TOP5</view>
+            <view class="list-item">属性增长曲线</view>
+            <view class="list-item">灵力统计</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 主题切换 -->
+      <view class="section">
+        <view class="section-title">🎨 主题切换</view>
+        <view class="section-body">
+          <text class="text">支持4种主题风格：</text>
+          <view class="list">
+            <view class="list-item">暗黑主题（默认）</view>
+            <view class="list-item">修仙复古</view>
+            <view class="list-item">轻量简约</view>
+            <view class="list-item">赛博朋克</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 常见问题 -->
+    <view class="tab-content" wx:if="{{activeTab === 5}}">
+      <view class="section">
+        <view class="section-title">❓ 常见问题</view>
+        <view class="section-body">
+          <view class="qa-item">
+            <view class="qa-question">
+              <text class="qa-icon">Q</text>
+              <text class="qa-text">属性为什么会下降？</text>
+            </view>
+            <view class="qa-answer">
+              <text class="qa-icon">A</text>
+              <text class="qa-text">如果某个属性连续7天没有提升，每天会衰减5%。定期完成相关任务可避免衰减。</text>
+            </view>
+          </view>
+
+          <view class="qa-item">
+            <view class="qa-question">
+              <text class="qa-icon">Q</text>
+              <text class="qa-text">灵力有什么用？</text>
+            </view>
+            <view class="qa-answer">
+              <text class="qa-icon">A</text>
+              <text class="qa-text">灵力用于修仙突破。当灵力足够时，可以点击突破按钮提升境界。</text>
+            </view>
+          </view>
+
+          <view class="qa-item">
+            <view class="qa-question">
+              <text class="qa-icon">Q</text>
+              <text class="qa-text">每日任务什么时候重置？</text>
+            </view>
+            <view class="qa-answer">
+              <text class="qa-icon">A</text>
+              <text class="qa-text">每次打开应用时自动检查并重置。同一天内不会重复重置。</text>
+            </view>
+          </view>
+
+          <view class="qa-item">
+            <view class="qa-question">
+              <text class="qa-icon">Q</text>
+              <text class="qa-text">如何获得更多灵力？</text>
+            </view>
+            <view class="qa-answer">
+              <text class="qa-icon">A</text>
+              <text class="qa-text">完成任务获得灵力。阶段任务奖励最多（500灵力），每日全部完成有额外50灵力。</text>
+            </view>
+          </view>
+
+          <view class="qa-item">
+            <view class="qa-question">
+              <text class="qa-icon">Q</text>
+              <text class="qa-text">可以修改任务奖励吗？</text>
+            </view>
+            <view class="qa-answer">
+              <text class="qa-icon">A</text>
+              <text class="qa-text">目前不支持修改已有任务。你可以删除任务后重新添加。</text>
+            </view>
+          </view>
+
+          <view class="qa-item">
+            <view class="qa-question">
+              <text class="qa-icon">Q</text>
+              <text class="qa-text">数据会丢失吗？</text>
+            </view>
+            <view class="qa-answer">
+              <text class="qa-icon">A</text>
+              <text class="qa-text">数据存储在云端，不会丢失。但重新初始化会清除所有数据。</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+</view>
