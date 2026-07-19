@@ -1,0 +1,123 @@
+<!--
+  塔罗牌占卜页面
+  功能：支持三种牌阵（单张牌、三张牌、凯尔特十字）
+
+  更新说明：
+  - 支持三种牌阵选择
+  - 翻牌动画效果
+  - 固定牌义文本解读
+  - 支持复制结果
+-->
+<view class="container {{themeClass}}">
+
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="page-title">🃏 塔罗牌占卜</view>
+    <view class="page-subtitle">聆听内心的声音，探索未知的可能</view>
+  </view>
+
+  <!-- 牌阵选择 -->
+  <view class="spread-section" wx:if="{{!showResult}}">
+    <view class="section-title">选择牌阵</view>
+    <view class="spread-grid">
+      <view
+        class="spread-card {{selectedSpread === 'single' ? 'active' : ''}}"
+        bindtap="selectSpread"
+        data-spread="single"
+      >
+        <view class="spread-icon">🃏</view>
+        <view class="spread-name">单张牌</view>
+        <view class="spread-desc">简单直接，快速获取答案</view>
+      </view>
+      <view
+        class="spread-card {{selectedSpread === 'threeCard' ? 'active' : ''}}"
+        bindtap="selectSpread"
+        data-spread="threeCard"
+      >
+        <view class="spread-icon">🃏🃏🃏</view>
+        <view class="spread-name">三张牌</view>
+        <view class="spread-desc">过去、现在、未来</view>
+      </view>
+      <view
+        class="spread-card {{selectedSpread === 'celticCross' ? 'active' : ''}}"
+        bindtap="selectSpread"
+        data-spread="celticCross"
+      >
+        <view class="spread-icon">✝️</view>
+        <view class="spread-name">凯尔特十字</view>
+        <view class="spread-desc">全面深入分析问题</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 问题输入 -->
+  <view class="question-section" wx:if="{{!showResult && selectedSpread}}">
+    <view class="section-title">心中默念你的问题</view>
+    <textarea
+      class="question-input"
+      placeholder="请输入你想问的问题..."
+      value="{{question}}"
+      bindinput="onQuestionInput"
+      maxlength="200"
+    />
+  </view>
+
+  <!-- 开始占卜按钮 -->
+  <view class="action-section" wx:if="{{!showResult && selectedSpread}}">
+    <button class="btn-divination" bindtap="startDivination" disabled="{{!canStart}}">
+      🔮 开始占卜
+    </button>
+  </view>
+
+  <!-- 牌面展示区 -->
+  <view class="cards-section" wx:if="{{showResult}}">
+    <!-- 牌阵名称 -->
+    <view class="result-header">
+      <view class="result-title">{{spreadName}}牌阵</view>
+      <view class="result-question" wx:if="{{question}}">问题：{{question}}</view>
+    </view>
+
+    <!-- 牌面网格 -->
+    <view class="cards-grid {{spreadType}}">
+      <view
+        class="card-wrapper {{item.isReversed ? 'reversed' : ''}} {{item.flipped ? 'flipped' : ''}}"
+        wx:for="{{drawnCards}}"
+        wx:key="id"
+        bindtap="flipCard"
+        data-index="{{index}}"
+      >
+        <!-- 牌背 -->
+        <view class="card-back">
+          <view class="card-back-icon">🌟</view>
+          <view class="card-back-text">点击翻牌</view>
+        </view>
+        <!-- 牌面 -->
+        <view class="card-front">
+          <view class="card-position">{{item.positionName}}</view>
+          <view class="card-icon">{{item.icon}}</view>
+          <view class="card-name">{{item.name}}</view>
+          <view class="card-orientation">{{item.isReversed ? '逆位' : '正位'}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 解读结果 -->
+    <view class="reading-section" wx:if="{{allFlipped}}">
+      <view class="section-title">📖 牌义解读</view>
+      <view class="reading-content">
+        <view class="reading-item" wx:for="{{readingItems}}" wx:key="index">
+          <view class="reading-position">📍 {{item.position}}：{{item.positionDesc}}</view>
+          <view class="reading-card">🃏 {{item.icon}} {{item.name}}（{{item.orientation}}）</view>
+          <view class="reading-meaning">📖 {{item.meaning}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="result-actions" wx:if="{{allFlipped}}">
+      <button class="btn-copy" bindtap="copyResult">📋 复制结果</button>
+      <button class="btn-reset" bindtap="resetDivination">🔄 重新占卜</button>
+    </view>
+  </view>
+
+</view>
